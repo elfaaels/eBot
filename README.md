@@ -1,6 +1,6 @@
-# ebot
+# eBot
 
-A new Flutter project.
+Personal AI Buddy.
 
 ## Getting Started
 
