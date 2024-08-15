@@ -1,25 +1,34 @@
-import 'package:ebot/shared/api_config.dart';
+import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:ebot/shared/api_config.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_generative_ai/google_generative_ai.dart';
 
-class AskByText extends StatefulWidget {
-  const AskByText({super.key});
+class AskByImage extends StatefulWidget {
+  const AskByImage({super.key});
 
   @override
-  State<AskByText> createState() => _AskByTextState();
+  State<AskByImage> createState() => _AskByImageState();
 }
 
-class _AskByTextState extends State<AskByText> {
+class _AskByImageState extends State<AskByImage> {
   final TextEditingController _questionTextController = TextEditingController();
   String _ebotAnswer = '';
+  XFile? _image;
 
-  getAnswerFromText() {
+  getAnswerFromImage() {
     GenerativeModel model = GenerativeModel(
         model: 'gemini-1.5-flash-latest', apiKey: ApiConfig().apiKey);
-    model.generateContent([Content.text(_questionTextController.text)]).then(
-        (value) {
+
+    model.generateContent([
+      Content.multi([
+        TextPart(_questionTextController.text),
+        if (_image != null)
+          DataPart('image/jpeg', File(_image!.path).readAsBytesSync())
+      ])
+    ]).then((value) {
       setState(() {
         _ebotAnswer = value.text.toString();
       });
@@ -46,6 +55,7 @@ class _AskByTextState extends State<AskByText> {
   @override
   void dispose() {
     _questionTextController.clear();
+    _image = null;
     super.dispose();
   }
 
@@ -57,7 +67,7 @@ class _AskByTextState extends State<AskByText> {
       appBar: AppBar(
         backgroundColor: const Color(0XFF1E201E),
         title: Text(
-          'Ask eBot by Text',
+          'Ask eBot by Image',
           textAlign: TextAlign.center,
           style: GoogleFonts.firaCode(
             fontWeight: FontWeight.w500,
@@ -78,13 +88,30 @@ class _AskByTextState extends State<AskByText> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              SizedBox(height: _ebotAnswer.isEmpty ? 100.h : 50.h),
+              SizedBox(height: _ebotAnswer.isEmpty ? 100.h : 40.h),
+              // IMAGE PICKED CONTENT
+              Container(
+                width: _image != null ? 200.w : 0,
+                height: _image != null ? 250.w : 0,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(12),
+                  image: _image != null
+                      ? DecorationImage(
+                          image: FileImage(File(
+                            _image!.path,
+                          )),
+                          fit: BoxFit.fill,
+                        )
+                      : null,
+                ),
+              ),
+              SizedBox(height: _ebotAnswer.isEmpty ? 0 : 40.w),
               _ebotAnswer.isEmpty
                   ? Padding(
                       padding: EdgeInsets.only(
                           top: 35.h, bottom: 10.h, left: 40.w, right: 40.w),
                       child: Text(
-                        'Type anything you want to ask...',
+                        'Pick any Image...',
                         textAlign: TextAlign.center,
                         style: GoogleFonts.firaCode(
                           fontWeight: FontWeight.w400,
@@ -131,10 +158,53 @@ class _AskByTextState extends State<AskByText> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Padding(
-                      padding: EdgeInsets.only(top: 60.h, bottom: 10.h),
+                      padding: EdgeInsets.only(top: 60.h, bottom: 6.h),
                       child: ElevatedButton(
                         onPressed: () {
-                          getAnswerFromText();
+                          ImagePicker()
+                              .pickImage(source: ImageSource.gallery)
+                              .then(
+                            (value) {
+                              setState(() {
+                                _image = value;
+                              });
+                            },
+                          );
+                        },
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.white,
+                          foregroundColor: Colors.black,
+                          elevation: 5,
+                          minimumSize: const Size(180, 55),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                        ),
+                        child: Text(
+                          'Pick Image',
+                          style: GoogleFonts.firaCode(
+                            fontWeight: FontWeight.normal,
+                            textStyle: TextStyle(
+                              color: Colors.black,
+                              fontSize: 14.sp,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Container(
+                alignment: Alignment.center,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.only(top: 10.h, bottom: 16.h),
+                      child: ElevatedButton(
+                        onPressed: () {
+                          getAnswerFromImage();
                         },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Colors.white,
