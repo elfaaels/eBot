@@ -1,6 +1,8 @@
+import 'package:ebot/shared/api_config.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:google_generative_ai/google_generative_ai.dart';
 
 class AskByText extends StatefulWidget {
   const AskByText({super.key});
@@ -12,6 +14,34 @@ class AskByText extends StatefulWidget {
 class _AskByTextState extends State<AskByText> {
   TextEditingController questionTextController = TextEditingController();
   String ebotAnswer = '';
+
+  getAnswer() {
+    GenerativeModel model = GenerativeModel(
+        model: 'gemini-1.5-flash-latest', apiKey: ApiConfig().apiKey);
+    model.generateContent([Content.text(questionTextController.text)]).then(
+        (value) {
+      setState(() {
+        ebotAnswer = value.text.toString();
+      });
+    });
+  }
+
+  ebotAnswerContent() {
+    return Padding(
+      padding: EdgeInsets.only(top: 0.h, bottom: 0.h, left: 40.w, right: 40.w),
+      child: Text(
+        ebotAnswer,
+        textAlign: TextAlign.justify,
+        style: GoogleFonts.firaCode(
+          fontWeight: FontWeight.normal,
+          textStyle: TextStyle(
+            color: Colors.green,
+            fontSize: 14.sp,
+          ),
+        ),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -42,12 +72,12 @@ class _AskByTextState extends State<AskByText> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              SizedBox(height: 100.h),
-              Padding(
-                padding: EdgeInsets.only(
-                    top: 35.h, bottom: 10.h, left: 40.w, right: 40.w),
-                child: ebotAnswer.isEmpty
-                    ? Text(
+              SizedBox(height: ebotAnswer.isEmpty ? 100.h : 50.h),
+              ebotAnswer.isEmpty
+                  ? Padding(
+                      padding: EdgeInsets.only(
+                          top: 35.h, bottom: 10.h, left: 40.w, right: 40.w),
+                      child: Text(
                         'Type anything you want to ask...',
                         textAlign: TextAlign.center,
                         style: GoogleFonts.firaCode(
@@ -57,20 +87,10 @@ class _AskByTextState extends State<AskByText> {
                             fontSize: 20.sp,
                           ),
                         ),
-                      )
-                    : Text(
-                        ebotAnswer,
-                        textAlign: TextAlign.justify,
-                        style: GoogleFonts.firaCode(
-                          fontWeight: FontWeight.normal,
-                          textStyle: TextStyle(
-                            color: Colors.white,
-                            fontSize: 14.sp,
-                          ),
-                        ),
                       ),
-              ),
-              SizedBox(height: 150.h),
+                    )
+                  : ebotAnswerContent(),
+              SizedBox(height: ebotAnswer.isEmpty ? 150.h : 50.h),
               Padding(
                 padding: EdgeInsets.only(left: 14.w, right: 14.w),
                 child: TextFormField(
@@ -78,13 +98,13 @@ class _AskByTextState extends State<AskByText> {
                   decoration: InputDecoration(
                     focusedBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(12.0),
-                      borderSide: BorderSide(
+                      borderSide: const BorderSide(
                         color: Colors.white,
                       ),
                     ),
                     enabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(12.0),
-                      borderSide: BorderSide(
+                      borderSide: const BorderSide(
                         color: Colors.white,
                         width: 0.0,
                       ),
@@ -107,7 +127,9 @@ class _AskByTextState extends State<AskByText> {
                     Padding(
                       padding: EdgeInsets.only(top: 60.h, bottom: 10.h),
                       child: ElevatedButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          getAnswer();
+                        },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Colors.white,
                           foregroundColor: Colors.black,
