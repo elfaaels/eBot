@@ -1,5 +1,7 @@
+import 'package:ebot/services/auth_service.dart';
 import 'package:ebot/shared/theme.dart.dart';
 import 'package:ebot/ui/main/authentication/register_screen.dart';
+import 'package:ebot/ui/main/main_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -157,13 +159,21 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
               // LOGIN BUTTON
               GestureDetector(
-                onTap: () {
-                  // Navigator.push(
-                  //   context,
-                  //   MaterialPageRoute(
-                  //     builder: (context) => const AskByText(),
-                  //   ),
-                  // );
+                onTap: () async {
+                  final message = await AuthService().login(
+                    email: _emailTextController.text,
+                    password: _passwordTextController.text,
+                  );
+                  if (message!.contains('Success')) {
+                    Navigator.of(context).pushReplacement(
+                      MaterialPageRoute(
+                        builder: (context) => const MainScreen(),
+                      ),
+                    );
+                  }
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(content: Text(message)),
+                  );
                 },
                 child: Padding(
                   padding: EdgeInsets.only(left: 20.w, right: 20.w, top: 16.w),

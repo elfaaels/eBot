@@ -5,14 +5,25 @@ import 'package:ebot/ui/main/ask_screen/ask_by_text.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class MainScreen extends StatefulWidget {
-  const MainScreen({super.key});
+  final String? username;
+
+  const MainScreen({super.key, this.username = 'You'});
 
   @override
   State<MainScreen> createState() => _MainScreenState();
 }
 
 class _MainScreenState extends State<MainScreen> {
-  final String _userName = 'Ansel';
+  String _userName = 'You';
+
+  @override
+  void initState() {
+    super.initState();
+    setState(() {
+      _userName = widget.username ?? _userName;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

@@ -1,4 +1,4 @@
-package com.example.ebot
+package com.elfaael.ebot
 
 import io.flutter.embedding.android.FlutterActivity
 

@@ -1,4 +1,6 @@
+import 'package:ebot/services/auth_service.dart';
 import 'package:ebot/shared/theme.dart.dart';
+import 'package:ebot/ui/main/main_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -191,11 +193,23 @@ class _RegisterScreenState extends State<RegisterScreen> {
               ),
               // REGISTER BUTTON
               GestureDetector(
-                onTap: () {
-                  // Navigator.push(
-                  //   context,
-                  //   MaterialPageRoute(
-                  //     builder: (context) => const AskByText(),
+                onTap: () async {
+                  final user = await AuthService().register(
+                    username: _usernameTextController.text,
+                    email: _emailTextController.text,
+                    password: _passwordTextController.text,
+                  );
+                  if (user != null) {
+                    Navigator.of(context).pushReplacement(
+                      MaterialPageRoute(
+                        builder: (context) =>
+                            MainScreen(username: _usernameTextController.text),
+                      ),
+                    );
+                  }
+                  // ScaffoldMessenger.of(context).showSnackBar(
+                  //   SnackBar(
+                  //     content: Text(message),
                   //   ),
                   // );
                 },
