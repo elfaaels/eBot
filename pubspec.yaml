@@ -1,5 +1,5 @@
 name: ebot
-description: "A new Flutter project."
+description: "Personal AI Buddy"
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
@@ -41,11 +41,17 @@ dependencies:
   flutter_gemini: ^2.0.4
   google_generative_ai: ^0.4.1
   image_picker: ^1.1.1
+  flutter_launcher_icons: ^0.13.1
 
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+
+flutter_icons:
+  android: true
+  ios: true
+  image_path: "assets/icons/ic_launcher.png"
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is

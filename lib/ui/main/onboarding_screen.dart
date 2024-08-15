@@ -1,7 +1,7 @@
-import 'package:ebot/ui/main/main_screen.dart';
+import 'package:lottie/lottie.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:lottie/lottie.dart';
+import 'package:ebot/ui/main/authentication/login_screen.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class OnboardingScreen extends StatefulWidget {
@@ -77,7 +77,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => MainScreen(),
+                          builder: (context) => const LoginScreen(),
                         ),
                       );
                     },

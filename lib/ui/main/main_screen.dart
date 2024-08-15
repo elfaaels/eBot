@@ -12,6 +12,7 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> {
+  final String _userName = 'Ansel';
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -19,7 +20,7 @@ class _MainScreenState extends State<MainScreen> {
       appBar: AppBar(
         backgroundColor: const Color(0XFF1E201E),
         title: Text(
-          'Hi, Ansel ' '👋',
+          'Hi, $_userName ' '👋',
           textAlign: TextAlign.center,
           style: GoogleFonts.firaCode(
             fontWeight: FontWeight.w500,
