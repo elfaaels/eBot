@@ -1,8 +1,10 @@
+import 'package:ebot/shared/theme.dart.dart';
 import 'package:ebot/ui/main/ask_screen/ask_by_image.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:ebot/ui/main/ask_screen/ask_by_text.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:lottie/lottie.dart';
 
 class MainScreen extends StatefulWidget {
   final String? username;
@@ -48,12 +50,10 @@ class _MainScreenState extends State<MainScreen> {
         actions: <Widget>[
           Padding(
             padding: const EdgeInsets.only(right: 20.0),
-            child: GestureDetector(
-              onTap: () {},
-              child: const Icon(
-                Icons.person,
-                size: 26.0,
-              ),
+            child: SizedBox(
+              height: 40.w,
+              width: 40.w,
+              child: Lottie.asset('assets/lottie_bot.json'),
             ),
           ),
         ],
@@ -63,17 +63,61 @@ class _MainScreenState extends State<MainScreen> {
         child: ListView(
           padding: EdgeInsets.zero,
           children: [
-            const DrawerHeader(
+            DrawerHeader(
               decoration: BoxDecoration(
-                color: Colors.white,
+                color: ThemeColor.mainBackgroundColor,
               ),
-              child: Text('Menu'),
+              child: Column(
+                children: [
+                  SizedBox(
+                    height: 100.w,
+                    width: 100.w,
+                    child: Lottie.asset('assets/lottie_bot.json'),
+                  ),
+                  Text(
+                    'eBot',
+                    style: GoogleFonts.pixelifySans(
+                      textStyle: TextStyle(
+                        color: Colors.white,
+                        fontSize: 16.sp,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            ListTile(
+              leading: const Icon(
+                Icons.person,
+              ),
+              title: const Text('Profile'),
+              onTap: () {
+                Navigator.pop(context);
+              },
+            ),
+            ListTile(
+              leading: const Icon(
+                Icons.info,
+              ),
+              title: const Text('Information'),
+              onTap: () {
+                Navigator.pop(context);
+              },
             ),
             ListTile(
               leading: const Icon(
                 Icons.settings,
               ),
               title: const Text('Settings'),
+              onTap: () {
+                Navigator.pop(context);
+              },
+            ),
+            ListTile(
+              leading: const Icon(
+                Icons.logout,
+              ),
+              title: const Text('Logout'),
               onTap: () {
                 Navigator.pop(context);
               },

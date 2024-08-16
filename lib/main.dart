@@ -1,12 +1,29 @@
-import 'package:ebot/ui/main/onboarding_screen.dart';
-import 'package:firebase_core/firebase_core.dart';
+import 'package:ebot/ui/main/splash_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:ebot/bloc/main_bloc/main_bloc.dart';
+import 'package:ebot/ui/main/onboarding_screen.dart';
+import 'package:ebot/bloc/splash_bloc/splash_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  runApp(const MyApp());
+  runApp(
+    MultiBlocProvider(
+      providers: [
+        BlocProvider<SplashBloc>(
+          create: (context) =>
+              SplashBloc()..add(AppStarted()), // Initiate the App Start state
+        ),
+        BlocProvider<MainBloc>(
+          create: (BuildContext context) => MainBloc(),
+        ),
+      ],
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -21,6 +38,10 @@ class MyApp extends StatelessWidget {
       // Use builder only if you need to use library outside ScreenUtilInit context
       builder: (_, child) {
         return MaterialApp(
+          initialRoute: '/splash',
+          routes: {
+            '/splash': (context) => SplashScreen(),
+          },
           debugShowCheckedModeBanner: false,
           title: 'eBot',
           theme: ThemeData(

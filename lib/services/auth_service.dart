@@ -13,7 +13,8 @@ class AuthService {
           .createUserWithEmailAndPassword(email: email, password: password);
       User? user = userCredential.user;
       if (user != null) {
-        await FirestoreConfig().addUserToFirestore(user.uid, username);
+        await FirestoreConfig().addUserToFirestore(
+            uid: user.uid, email: email, userName: username);
       }
       return user;
       // } on FirebaseAuthException catch (e) {
@@ -25,7 +26,7 @@ class AuthService {
       //     return e.message;
       //   }
     } catch (e) {
-      return null;
+      throw 'ERROR_REGISTER';
     }
   }
 

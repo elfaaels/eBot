@@ -1,3 +1,5 @@
+import 'package:ebot/model/question.dart';
+import 'package:ebot/services/firestore_config.dart';
 import 'package:ebot/shared/api_config.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -14,6 +16,7 @@ class AskByText extends StatefulWidget {
 class _AskByTextState extends State<AskByText> {
   final TextEditingController _questionTextController = TextEditingController();
   String _ebotAnswer = '';
+  Question? question;
 
   getAnswerFromText() {
     GenerativeModel model = GenerativeModel(
@@ -24,6 +27,15 @@ class _AskByTextState extends State<AskByText> {
         _ebotAnswer = value.text.toString();
       });
     });
+    // Save Data to Firestore add to Bloc Listener
+    setState(() {
+      question?.createdAt = DateTime.now().toString();
+      question?.textQuestion = _questionTextController.text;
+      question?.imageQuestion = false;
+      question?.answer = _ebotAnswer;
+      question?.imageUrl = '';
+    });
+    DatabaseService().addQuestion(question: question);
   }
 
   ebotAnswerContent() {
