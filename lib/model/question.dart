@@ -7,7 +7,7 @@ class Question {
   String? answer;
   bool? imageQuestion;
   String? imageUrl;
-  User? user;
+  UserModel? user;
 
   Question({
     this.id,

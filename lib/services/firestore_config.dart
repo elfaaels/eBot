@@ -1,6 +1,7 @@
 import 'package:ebot/model/question.dart';
 import 'package:ebot/model/user.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class FirestoreConfig {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
@@ -31,56 +32,58 @@ class FirestoreConfig {
     return returnValue;
   }
 
-  Future<User?> getUser(String uid) async {
-    User? returnValue;
+  // Future<User?> getUser(String uid) async {
+  //   User? returnValue;
 
+  //   try {
+  //     DocumentSnapshot _docSnapshot =
+  //         await _firestore.collection("users").doc(uid).get();
+  //     returnValue = User.fromData(_docSnapshot.data() as Map<String, dynamic>);
+  //   } catch (e) {
+  //     print(e);
+  //   }
+
+  //   return returnValue;
+  // }
+
+  // Stream<QuerySnapshot> get usersCollection {
+  //   return users.snapshots();
+  // }
+
+//   Future<User> getUserInfo(String uid) async {
+//     User user = User();
+//     try {
+//       DocumentSnapshot _docSnapshot =
+//           await _firestore.collection("users").doc(uid).get();
+//       user.uid = uid;
+//       user.email = _docSnapshot['email'];
+//       user.userName = _docSnapshot['userName'];
+//     } catch (e) {
+//       print(e);
+//     }
+//     return user;
+//   }
+// }
+
+  Future<String?> getUsername(String uid) async {
     try {
-      DocumentSnapshot _docSnapshot =
-          await _firestore.collection("users").doc(uid).get();
-      returnValue = User.fromData(_docSnapshot.data() as Map<String, dynamic>);
+      DocumentSnapshot doc =
+          await FirebaseFirestore.instance.collection('users').doc(uid).get();
+      return doc['username'];
+    } catch (e) {
+      print(e);
+      return null;
+    }
+  }
+
+  Future<void> updateUsername(String uid, String newUsername) async {
+    try {
+      CollectionReference users =
+          FirebaseFirestore.instance.collection('users');
+      await users.doc(uid).update({'username': newUsername});
     } catch (e) {
       print(e);
     }
-
-    return returnValue;
-  }
-
-  Stream<QuerySnapshot> get usersCollection {
-    return users.snapshots();
-  }
-
-  Future<User> getUserInfo(String uid) async {
-    User user = User();
-    try {
-      DocumentSnapshot _docSnapshot =
-          await _firestore.collection("users").doc(uid).get();
-      user.uid = uid;
-      user.email = _docSnapshot['email'];
-      user.userName = _docSnapshot['userName'];
-    } catch (e) {
-      print(e);
-    }
-    return user;
-  }
-}
-
-Future<String?> getUsername(String uid) async {
-  try {
-    DocumentSnapshot doc =
-        await FirebaseFirestore.instance.collection('users').doc(uid).get();
-    return doc['username'];
-  } catch (e) {
-    print(e);
-    return null;
-  }
-}
-
-Future<void> updateUsername(String uid, String newUsername) async {
-  try {
-    CollectionReference users = FirebaseFirestore.instance.collection('users');
-    await users.doc(uid).update({'username': newUsername});
-  } catch (e) {
-    print(e);
   }
 }
 
@@ -105,19 +108,30 @@ class DatabaseService {
     }).toList();
   }
 
+  UserModel? getCurrentUser() {
+    final user = FirebaseAuth.instance.currentUser;
+    if (user != null) {
+      return UserModel(
+        uid: user.uid,
+        email: user.email ?? '',
+      );
+    }
+    return null;
+  }
+
   Future<void> addQuestion({Question? question}) {
     CollectionReference questions =
         FirebaseFirestore.instance.collection('questions');
+    UserModel? currentUser = getCurrentUser();
 
     return questions
         .add({
-          'id': questions.id,
           'createdAt': question?.createdAt,
           'textQuestion': question?.textQuestion,
           'answer': question?.answer,
           'imageQuestion': question?.imageQuestion,
           'imageUrl': question?.imageUrl,
-          // 'user': User(),
+          'user': currentUser?.toFirestore(),
         })
         .then((value) => print("Question added successfully!"))
         .catchError((error) => print("Failed to add Question: $error"));
