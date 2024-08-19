@@ -39,8 +39,6 @@ class _LoginScreenState extends State<LoginScreen> {
               SnackBar(content: Text(state.authMessage)),
             );
           } else if (state is LoginError) {
-            Navigator.pop(context);
-            GlobalWidget().errorDialog(context);
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(content: Text(state.errorType!)),
             );
