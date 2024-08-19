@@ -1,5 +1,6 @@
 import 'package:ebot/bloc/register_bloc/register_bloc.dart';
 import 'package:ebot/shared/theme.dart.dart';
+import 'package:ebot/ui/main/authentication/login_screen.dart';
 import 'package:ebot/ui/main/main_screen.dart';
 import 'package:ebot/widget/global_widget.dart';
 import 'package:flutter/material.dart';
@@ -18,6 +19,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   final TextEditingController _emailTextController = TextEditingController();
   final TextEditingController _passwordTextController = TextEditingController();
   final TextEditingController _usernameTextController = TextEditingController();
+  bool _passwordVisible = false;
 
   @override
   Widget build(BuildContext context) {
@@ -40,6 +42,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
               SnackBar(content: Text('Registration Success')),
             );
           } else if (state is RegisterError) {
+            Navigator.pop(context);
+            GlobalWidget().errorDialog(context);
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(content: Text(state.errorType!)),
             );
@@ -111,7 +115,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 width: 0.0,
                               ),
                             ),
-                            hintText: 'MyName123',
+                            hintText: 'JohnDoe123',
                             hintStyle: TextStyle(
                               color: Colors.grey[800],
                               fontWeight: FontWeight.w400,
@@ -195,6 +199,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             left: 20.w, right: 20.w, top: 10.h, bottom: 10.h),
                         child: TextFormField(
                           controller: _passwordTextController,
+                          obscureText: _passwordVisible,
                           decoration: InputDecoration(
                             fillColor: Colors.white,
                             focusedBorder: OutlineInputBorder(
@@ -214,6 +219,21 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             hintStyle: TextStyle(
                               color: Colors.grey[800],
                               fontWeight: FontWeight.w400,
+                            ),
+                            suffixIcon: IconButton(
+                              // focusColor: Colors.white,
+                              // color: Colors.white,
+                              icon: Icon(
+                                _passwordVisible
+                                    ? Icons.visibility
+                                    : Icons.visibility_off,
+                                color: Colors.white,
+                              ),
+                              onPressed: () {
+                                setState(() {
+                                  _passwordVisible = !_passwordVisible;
+                                });
+                              },
                             ),
                           ),
                           onSaved: (String? value) {},
@@ -271,17 +291,22 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         ),
                       ),
                       // DIVIDER
-                      Center(
-                        child: Padding(
-                          padding: EdgeInsets.only(
-                              left: 40.w, right: 40.w, top: 20.w),
-                          child: Text(
-                            "Login",
-                            style: GoogleFonts.firaCode(
-                              fontWeight: FontWeight.normal,
-                              textStyle: TextStyle(
-                                color: Colors.teal,
-                                fontSize: 12.sp,
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.pop(context);
+                        },
+                        child: Center(
+                          child: Padding(
+                            padding: EdgeInsets.only(
+                                left: 40.w, right: 40.w, top: 20.w),
+                            child: Text(
+                              "Login",
+                              style: GoogleFonts.firaCode(
+                                fontWeight: FontWeight.normal,
+                                textStyle: TextStyle(
+                                  color: Colors.teal,
+                                  fontSize: 12.sp,
+                                ),
                               ),
                             ),
                           ),

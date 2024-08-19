@@ -18,6 +18,7 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController _emailTextController = TextEditingController();
   final TextEditingController _passwordTextController = TextEditingController();
+  bool _passwordVisible = false;
 
   @override
   Widget build(BuildContext context) {
@@ -38,6 +39,8 @@ class _LoginScreenState extends State<LoginScreen> {
               SnackBar(content: Text(state.authMessage)),
             );
           } else if (state is LoginError) {
+            Navigator.pop(context);
+            GlobalWidget().errorDialog(context);
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(content: Text(state.errorType!)),
             );
@@ -144,6 +147,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             left: 20.w, right: 20.w, top: 10.h, bottom: 10.h),
                         child: TextFormField(
                           controller: _passwordTextController,
+                          obscureText: _passwordVisible,
                           decoration: InputDecoration(
                             fillColor: Colors.white,
                             focusedBorder: OutlineInputBorder(
@@ -163,6 +167,21 @@ class _LoginScreenState extends State<LoginScreen> {
                             hintStyle: TextStyle(
                               color: Colors.grey[800],
                               fontWeight: FontWeight.w400,
+                            ),
+                            suffixIcon: IconButton(
+                              // focusColor: Colors.white,
+                              // color: Colors.white,
+                              icon: Icon(
+                                _passwordVisible
+                                    ? Icons.visibility
+                                    : Icons.visibility_off,
+                                color: Colors.white,
+                              ),
+                              onPressed: () {
+                                setState(() {
+                                  _passwordVisible = !_passwordVisible;
+                                });
+                              },
                             ),
                           ),
                           onSaved: (String? value) {},
