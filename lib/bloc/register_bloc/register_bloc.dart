@@ -21,7 +21,7 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
       } catch (e) {
         emit(RegisterError(errorType: e.toString()));
       }
-      emit(RegisterError(errorType: "ERROR"));
+      // emit(RegisterError(errorType: "ERROR"));
     });
   }
 }

@@ -18,7 +18,15 @@ class _RegisterScreenState extends State<RegisterScreen> {
   final TextEditingController _emailTextController = TextEditingController();
   final TextEditingController _passwordTextController = TextEditingController();
   final TextEditingController _usernameTextController = TextEditingController();
-  bool _passwordVisible = false;
+  bool _passwordVisible = true;
+
+  @override
+  void dispose() {
+    _emailTextController.dispose();
+    _passwordTextController.dispose();
+    _usernameTextController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {

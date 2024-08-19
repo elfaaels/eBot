@@ -1,5 +1,7 @@
 import 'package:ebot/shared/theme.dart.dart';
 import 'package:ebot/ui/main/ask_screen/ask_by_image.dart';
+import 'package:ebot/ui/main/information_screen.dart';
+import 'package:ebot/ui/main/question_list_screen.dart';
 import 'package:ebot/widget/global_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -91,7 +93,16 @@ class _MainScreenState extends State<MainScreen> {
               leading: const Icon(
                 Icons.person,
               ),
-              title: const Text('Profile'),
+              title: Text(
+                'Profile',
+                style: GoogleFonts.firaCode(
+                  fontWeight: FontWeight.w500,
+                  textStyle: TextStyle(
+                    color: Colors.black,
+                    fontSize: 14.sp,
+                  ),
+                ),
+              ),
               onTap: () {
                 Navigator.pop(context);
               },
@@ -100,9 +111,23 @@ class _MainScreenState extends State<MainScreen> {
               leading: const Icon(
                 Icons.info,
               ),
-              title: const Text('Information'),
+              title: Text(
+                'Information',
+                style: GoogleFonts.firaCode(
+                  fontWeight: FontWeight.w500,
+                  textStyle: TextStyle(
+                    color: Colors.black,
+                    fontSize: 14.sp,
+                  ),
+                ),
+              ),
               onTap: () {
-                Navigator.pop(context);
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const InformationScreen(),
+                  ),
+                );
               },
             ),
             // ListTile(
@@ -118,7 +143,16 @@ class _MainScreenState extends State<MainScreen> {
               leading: const Icon(
                 Icons.logout,
               ),
-              title: const Text('Logout'),
+              title: Text(
+                'Logout',
+                style: GoogleFonts.firaCode(
+                  fontWeight: FontWeight.w500,
+                  textStyle: TextStyle(
+                    color: Colors.black,
+                    fontSize: 14.sp,
+                  ),
+                ),
+              ),
               onTap: () {
                 GlobalWidget()
                     .showGlobalAlert(context, "Logout?", isLogout: true);
@@ -247,15 +281,24 @@ class _MainScreenState extends State<MainScreen> {
                 ),
               ),
               SizedBox(height: 30.h),
-              Text(
-                'History',
-                textAlign: TextAlign.center,
-                style: GoogleFonts.firaCode(
-                  fontWeight: FontWeight.w600,
-                  textStyle: TextStyle(
-                    decoration: TextDecoration.underline,
-                    color: Colors.white,
-                    fontSize: 12.sp,
+              GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const QuestionListScreen(),
+                      ));
+                },
+                child: Text(
+                  'History',
+                  textAlign: TextAlign.center,
+                  style: GoogleFonts.firaCode(
+                    fontWeight: FontWeight.w600,
+                    textStyle: TextStyle(
+                      decoration: TextDecoration.underline,
+                      color: Colors.white,
+                      fontSize: 12.sp,
+                    ),
                   ),
                 ),
               ),

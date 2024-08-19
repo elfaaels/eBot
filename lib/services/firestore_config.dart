@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:ebot/model/question.dart';
 import 'package:ebot/model/user.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -98,14 +100,60 @@ class DatabaseService {
   final CollectionReference userCollection =
       FirebaseFirestore.instance.collection('users');
 
-  List<Question> _questionListFromSnapshot(QuerySnapshot snapshot) {
+  // List<Question> _questionListFromSnapshot(QuerySnapshot snapshot) {
+  //   print(snapshot.docs.length);
+  //   return snapshot.docs.map((doc) {
+  //     print('print complaint docid ' + doc.id);
+  //     return Question(
+  //       id: doc.id,
+  //     );
+  //   }).toList();
+  // }
+
+  String? getCurrentUserId() {
+    final user = FirebaseAuth.instance.currentUser;
+    return user?.uid;
+  }
+
+  Stream<QuerySnapshot> getUserDataStream() {
+    String? userId = getCurrentUserId();
+    if (userId != null) {
+      return FirebaseFirestore.instance
+          .collection('questions')
+          .where('user.id', isEqualTo: userId)
+          .snapshots();
+    } else {
+      // Handle the case when the user is not signed in
+      return const Stream.empty();
+    }
+  }
+
+  List<Question> _complaintListFromSnapshot(QuerySnapshot snapshot) {
     print(snapshot.docs.length);
     return snapshot.docs.map((doc) {
-      print('print complaint docid ' + doc.id);
+      final data = doc.data() as Map<String, dynamic>;
+      log('Question Data: docid ' + doc.id);
       return Question(
         id: doc.id,
+        textQuestion: data['textQuestion'],
+        answer: data['answer'],
+        imageQuestion: data['imageQuestion'],
+        imageUrl: data['imageUrl'],
+        // user: UserModel.fromFirestore(snapshot,  null),
       );
     }).toList();
+  }
+
+  Stream<List<Question>> get complaints {
+    log('question - uid - $uid');
+    final snapshot = questions.where('uid', isEqualTo: uid).snapshots();
+    print(snapshot.length);
+    return snapshot.map(_complaintListFromSnapshot);
+  }
+
+  deleteComplaint(String id) async {
+    await questions.doc(id).delete();
+    log('Question: deleted' + id);
   }
 
   UserModel? getCurrentUser() {
