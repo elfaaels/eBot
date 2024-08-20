@@ -1,8 +1,11 @@
-import 'package:ebot/model/question.dart';
+import 'dart:developer';
+import 'package:ebot/bloc/question_list_bloc/question_list_bloc.dart';
+import 'package:ebot/services/firestore_config.dart';
 import 'package:ebot/shared/theme.dart.dart';
 import 'package:ebot/ui/main/question_detail_screen.dart';
 import 'package:ebot/widget/question_card.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -21,17 +24,20 @@ class QuestionListScreen extends StatefulWidget {
 }
 
 class _QuestionListScreenState extends State<QuestionListScreen> {
-  List<Question> _questionData = [
-    Question(
-      textQuestion: 'Who is fred again?',
-      answer: 'TEST TEST TEST',
-      createdAt: '2022-01-01 12:00:00',
-    ),
-    Question(
-      textQuestion: 'Who is Taylor Swift?',
-      createdAt: '2022-01-01 12:00:00',
-    ),
-  ];
+  final DatabaseService _databaseService = DatabaseService();
+  // QuestionListBloc? _questionListBloc;
+
+  // List<Question> _questionData = [
+  //   Question(
+  //     textQuestion: 'Who is fred again?',
+  //     answer: 'TEST TEST TEST',
+  //     createdAt: '2022-01-01 12:00:00',
+  //   ),
+  //   Question(
+  //     textQuestion: 'Who is Taylor Swift?',
+  //     createdAt: '2022-01-01 12:00:00',
+  //   ),
+  // ];
 
   Widget _emptyState() {
     return Center(
@@ -47,6 +53,12 @@ class _QuestionListScreenState extends State<QuestionListScreen> {
         ),
       ),
     );
+  }
+
+  @override
+  void initState() {
+    log("INIT: QuestionListScreen");
+    super.initState();
   }
 
   @override
@@ -68,71 +80,105 @@ class _QuestionListScreenState extends State<QuestionListScreen> {
         iconTheme: const IconThemeData(color: Colors.white),
         backgroundColor: ThemeColor.mainBackgroundColor,
       ),
-      body: Container(
-        padding: EdgeInsets.symmetric(horizontal: 16.w),
-        child: ListView.builder(
-          itemCount: _questionData.length,
-          itemBuilder: (context, index) {
-            final item = _questionData[index];
-            return Dismissible(
-              key: UniqueKey(),
-              background: Container(
-                height: 85.w,
-                width: double.infinity,
-                margin: EdgeInsets.symmetric(vertical: 8.h),
-                padding: EdgeInsets.all(16.w),
-                decoration: BoxDecoration(
-                  color: ThemeColor.mainBackgroundColor,
-                  border: Border.all(width: 1, color: Colors.red),
-                  borderRadius: BorderRadius.circular(12.0),
-                ),
-                child: Align(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: <Widget>[
-                      Icon(Icons.delete, color: Colors.red),
-                      Text(
-                        " Delete",
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.w700,
-                        ),
-                        textAlign: TextAlign.right,
-                      ),
-                      SizedBox(width: 20),
-                    ],
-                  ),
-                  alignment: Alignment.centerRight,
-                ),
-              ),
-              direction: DismissDirection.endToStart,
-              onDismissed: (direction) {
-                setState(() {
-                  _questionData.removeAt(index);
-                });
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(content: Text("$item dismissed")),
-                );
-              },
-              child: GestureDetector(
-                onTap: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => QuestionDetailScreen(
-                          questionText: _questionData[index].textQuestion,
-                          answer: _questionData[index].answer,
-                          date: _questionData[index].createdAt,
-                        ),
-                      ));
-                },
-                child: QuestionCard(
-                  questionText: item.textQuestion,
-                  date: item.createdAt,
-                ),
-              ),
-            );
+      body: BlocProvider<QuestionListBloc>(
+        create: (context) => QuestionListBloc(
+          databaseService: _databaseService,
+        )..add(QuestionListLoaded()),
+        child: BlocListener<QuestionListBloc, QuestionListState>(
+          listener: (context, state) {
+            // TODO: implement listener
           },
+          child: BlocBuilder<QuestionListBloc, QuestionListState>(
+            builder: (context, state) {
+              log("BLOC STATE: " + state.toString());
+              if (state is QuestionListSuccess) {
+                final questions = state.questions;
+                log(questions.toString());
+                return Container(
+                  padding: EdgeInsets.symmetric(horizontal: 16.w),
+                  child: ListView.builder(
+                    itemCount: questions.length,
+                    itemBuilder: (context, index) {
+                      final item = questions[index];
+                      return Dismissible(
+                        key: UniqueKey(),
+                        background: Container(
+                          height: 85.w,
+                          width: double.infinity,
+                          margin: EdgeInsets.symmetric(vertical: 8.h),
+                          padding: EdgeInsets.all(16.w),
+                          decoration: BoxDecoration(
+                            color: ThemeColor.mainBackgroundColor,
+                            border: Border.all(width: 1, color: Colors.red),
+                            borderRadius: BorderRadius.circular(12.0),
+                          ),
+                          child: Align(
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: <Widget>[
+                                Icon(Icons.delete, color: Colors.red),
+                                Text(
+                                  " Delete",
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.w700,
+                                  ),
+                                  textAlign: TextAlign.right,
+                                ),
+                                SizedBox(width: 20),
+                              ],
+                            ),
+                            alignment: Alignment.centerRight,
+                          ),
+                        ),
+                        direction: DismissDirection.endToStart,
+                        onDismissed: (direction) {
+                          setState(() {
+                            // questions.removeAt(index);
+                          });
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(content: Text("$item dismissed")),
+                          );
+                        },
+                        child: GestureDetector(
+                          onTap: () async {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => QuestionDetailScreen(
+                                    date: questions[index].createdAt,
+                                    questionText: questions[index].textQuestion,
+                                    answer: questions[index].answer,
+                                    imageQuestion:
+                                        questions[index].imageQuestion,
+                                    imageUrl: questions[index].imageUrl,
+                                  ),
+                                ));
+                          },
+                          child: QuestionCard(
+                            questionText: item.textQuestion,
+                            date: item.createdAt,
+                          ),
+                        ),
+                      );
+                    },
+                  ),
+                );
+              } else if (state is QuestionListLoading) {
+                return Container(
+                  child: Center(
+                    child: CircularProgressIndicator(),
+                  ),
+                );
+              } else {
+                return Container(
+                  child: Center(
+                    child: _emptyState(),
+                  ),
+                );
+              }
+            },
+          ),
         ),
       ),
     );

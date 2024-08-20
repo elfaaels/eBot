@@ -1,6 +1,7 @@
 import 'package:ebot/shared/theme.dart.dart';
 import 'package:ebot/ui/main/ask_screen/ask_by_image.dart';
 import 'package:ebot/ui/main/information_screen.dart';
+import 'package:ebot/ui/main/profile_screen.dart';
 import 'package:ebot/ui/main/question_list_screen.dart';
 import 'package:ebot/widget/global_widget.dart';
 import 'package:flutter/material.dart';
@@ -12,7 +13,7 @@ import 'package:lottie/lottie.dart';
 class MainScreen extends StatefulWidget {
   final String? username;
 
-  const MainScreen({super.key, this.username = 'You'});
+  const MainScreen({super.key, this.username});
 
   @override
   State<MainScreen> createState() => _MainScreenState();
@@ -24,9 +25,11 @@ class _MainScreenState extends State<MainScreen> {
   @override
   void initState() {
     super.initState();
-    setState(() {
-      _userName = widget.username ?? _userName;
-    });
+    if (widget.username != null) {
+      setState(() {
+        _userName = widget.username ?? _userName;
+      });
+    }
   }
 
   @override
@@ -104,7 +107,12 @@ class _MainScreenState extends State<MainScreen> {
                 ),
               ),
               onTap: () {
-                Navigator.pop(context);
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const ProfileScreen(),
+                  ),
+                );
               },
             ),
             ListTile(

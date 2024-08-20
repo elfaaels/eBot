@@ -18,4 +18,15 @@ class Question {
     this.imageUrl,
     this.user,
   });
+
+  factory Question.fromMap(Map<String, dynamic> map, String documentId) {
+    return Question(
+      id: documentId,
+      createdAt: map['createdAt'],
+      textQuestion: map['textQuestion'] ?? '',
+      answer: map['answer'] ?? '',
+      imageQuestion: map['imageQuestion'] ?? '',
+      imageUrl: map['imageUrl'] ?? '',
+    );
+  }
 }

@@ -21,12 +21,6 @@ class FirestoreConfig {
         'userName': userName,
         'createdAt': FieldValue.serverTimestamp(),
       });
-      // await users.doc(uid).set({
-      //   'uid': uid,
-      //   'email': email,
-      //   'username': username,
-      //   'createdAt': FieldValue.serverTimestamp(),
-      // });
       returnValue = 'SUCCESS';
     } catch (e) {
       print(e);
@@ -120,7 +114,7 @@ class DatabaseService {
     if (userId != null) {
       return FirebaseFirestore.instance
           .collection('questions')
-          .where('user.id', isEqualTo: userId)
+          .where('uid', isEqualTo: userId)
           .snapshots();
     } else {
       // Handle the case when the user is not signed in
@@ -128,27 +122,44 @@ class DatabaseService {
     }
   }
 
-  List<Question> _complaintListFromSnapshot(QuerySnapshot snapshot) {
-    print(snapshot.docs.length);
-    return snapshot.docs.map((doc) {
-      final data = doc.data() as Map<String, dynamic>;
-      log('Question Data: docid ' + doc.id);
-      return Question(
-        id: doc.id,
-        textQuestion: data['textQuestion'],
-        answer: data['answer'],
-        imageQuestion: data['imageQuestion'],
-        imageUrl: data['imageUrl'],
-        // user: UserModel.fromFirestore(snapshot,  null),
-      );
+  Future<List<Question>> getQuestionsForCurrentUser() async {
+    String? userId = getCurrentUserId();
+
+    if (userId == null) {
+      return []; // Handle the case where the user is not authenticated
+    }
+
+    QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+        .collection('questions')
+        .where('user.uid', isEqualTo: userId)
+        // .orderBy('createdAt', descending: true)
+        .get();
+
+    return querySnapshot.docs.map((doc) {
+      return Question.fromMap(doc.data() as Map<String, dynamic>, doc.id);
     }).toList();
   }
 
-  Stream<List<Question>> get complaints {
-    log('question - uid - $uid');
-    final snapshot = questions.where('uid', isEqualTo: uid).snapshots();
-    print(snapshot.length);
-    return snapshot.map(_complaintListFromSnapshot);
+  Stream<List<Question>> getQuestion() {
+    String? userId = getCurrentUserId();
+    return FirebaseFirestore.instance
+        .collection('questions')
+        .where('user.uid', isEqualTo: userId)
+        .snapshots()
+        .map((snapshot) {
+      return snapshot.docs.map((doc) {
+        Map<String, dynamic> data = doc.data();
+        log("data: " + data.toString());
+        return Question(
+          id: doc.id,
+          textQuestion: data['textQuestion'],
+          answer: data['answer'],
+          imageQuestion: data['imageQuestion'],
+          imageUrl: data['imageUrl'],
+          // user: UserModel.fromFirestore(snapshot,  null),
+        );
+      }).toList();
+    });
   }
 
   deleteComplaint(String id) async {
@@ -183,16 +194,5 @@ class DatabaseService {
         })
         .then((value) => print("Question added successfully!"))
         .catchError((error) => print("Failed to add Question: $error"));
-  }
-
-  Future<void> fetchQuestions() {
-    CollectionReference questions =
-        FirebaseFirestore.instance.collection('question');
-
-    return questions.get().then((QuerySnapshot snapshot) {
-      snapshot.docs.forEach((doc) {
-        print('${doc.id} => ${doc.data()}');
-      });
-    }).catchError((error) => print("Failed to fetch users: $error"));
   }
 }
