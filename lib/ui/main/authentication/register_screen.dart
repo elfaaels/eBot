@@ -1,6 +1,6 @@
 import 'package:ebot/bloc/register_bloc/register_bloc.dart';
 import 'package:ebot/shared/theme.dart.dart';
-import 'package:ebot/ui/main/main_screen.dart';
+import 'package:ebot/ui/main/core/main_screen.dart';
 import 'package:ebot/widget/global_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

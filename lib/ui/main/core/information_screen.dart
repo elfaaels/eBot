@@ -1,27 +1,12 @@
-import 'package:ebot/bloc/profile_bloc/profile_bloc.dart';
-import 'package:ebot/services/firestore_config.dart';
 import 'package:ebot/shared/theme.dart.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class ProfileScreen extends StatefulWidget {
-  const ProfileScreen({super.key});
+class InformationScreen extends StatelessWidget {
+  final ValueNotifier<bool>? isPresented;
 
-  @override
-  State<ProfileScreen> createState() => _ProfileScreenState();
-}
-
-class _ProfileScreenState extends State<ProfileScreen> {
-  final DatabaseService _databaseService = DatabaseService();
-  String? profileEmail;
-
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-  }
+  const InformationScreen({Key? key, this.isPresented}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -39,47 +24,24 @@ class _ProfileScreenState extends State<ProfileScreen> {
           },
         ),
       ),
-      body: BlocProvider(
-        create: (context) => ProfileBloc(
-          databaseService: _databaseService,
-        )..add(ProfileLoaded()),
-        child: BlocListener<ProfileBloc, ProfileState>(
-          listener: (context, state) {},
-          child: BlocBuilder<ProfileBloc, ProfileState>(
-            builder: (context, state) {
-              if (state is ProfileSucceed) {
-                profileEmail = state.user!.email;
-                return ListView(
-                  children: [
-                    _buildSectionHeader('PROFILE INFORMATION'),
-                    _buildListRow(
-                        'Email', Icons.person, profileEmail, Colors.blue),
-                    _buildSectionFooter(
-                        '© 2024 eBot. Copyright All Rights Reserved.'),
-                  ],
-                );
-              } else if (state is ProfileLoading) {
-                return CircularProgressIndicator();
-              } else {
-                return Container(
-                  child: Center(
-                    child: Text(
-                      'ERROR',
-                      textAlign: TextAlign.center,
-                      style: GoogleFonts.firaCode(
-                        fontWeight: FontWeight.w500,
-                        textStyle: TextStyle(
-                          color: Colors.white,
-                          fontSize: 14.sp,
-                        ),
-                      ),
-                    ),
-                  ),
-                );
-              }
-            },
-          ),
-        ),
+      body: ListView(
+        children: [
+          _buildSectionHeader('ABOUT THE APP'),
+          _buildListRow('Application', Icons.apps, 'eBot', Colors.blue),
+          _buildListRow(
+              'Compatibility', Icons.info, 'Android, iOS', Colors.red),
+          _buildListRow('Technology', Icons.code, 'Flutter', Colors.orange),
+          _buildListRow('Version', Icons.settings, '1.0.0', Colors.purple),
+          _buildListRow(
+              'Developer', Icons.developer_mode, 'Elfaael', Colors.teal),
+          _buildListRow(
+              'Designer', Icons.chevron_right, 'Elfaael', Colors.pink),
+          _buildListRow(
+              'Website', Icons.public, 'elfaael.webflow.io', Colors.indigo),
+          // _buildListRowWithLink('Website', Icons.public, 'My Website',
+          //     Colors.pink, 'https://elfaael.webflow.io'),
+          _buildSectionFooter('Copyright All Rights Reserved'),
+        ],
       ),
     );
   }
