@@ -2,6 +2,7 @@ import 'package:ebot/bloc/login_bloc/login_bloc.dart';
 import 'package:ebot/shared/theme.dart.dart';
 import 'package:ebot/ui/main/authentication/register_screen.dart';
 import 'package:ebot/ui/main/main_screen.dart';
+import 'package:ebot/utils/route_utils.dart';
 import 'package:ebot/widget/global_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -286,12 +287,8 @@ class _LoginScreenState extends State<LoginScreen> {
                       // REGISTER BUTTON
                       GestureDetector(
                         onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const RegisterScreen(),
-                            ),
-                          );
+                          ScreenNavigator(cx: context).navigate(
+                              RegisterScreen(), NavigatorTweens.rightToLeft());
                         },
                         child: Padding(
                           padding: EdgeInsets.only(

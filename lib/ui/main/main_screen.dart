@@ -1,8 +1,10 @@
+import 'package:animate_do/animate_do.dart';
 import 'package:ebot/shared/theme.dart.dart';
 import 'package:ebot/ui/main/ask_screen/ask_by_image.dart';
 import 'package:ebot/ui/main/information_screen.dart';
 import 'package:ebot/ui/main/profile_screen.dart';
 import 'package:ebot/ui/main/question_list_screen.dart';
+import 'package:ebot/utils/route_utils.dart';
 import 'package:ebot/widget/global_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -107,12 +109,8 @@ class _MainScreenState extends State<MainScreen> {
                 ),
               ),
               onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const ProfileScreen(),
-                  ),
-                );
+                ScreenNavigator(cx: context)
+                    .navigate(ProfileScreen(), NavigatorTweens.rightToLeft());
               },
             ),
             ListTile(
@@ -130,12 +128,8 @@ class _MainScreenState extends State<MainScreen> {
                 ),
               ),
               onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const InformationScreen(),
-                  ),
-                );
+                ScreenNavigator(cx: context).navigate(
+                    InformationScreen(), NavigatorTweens.rightToLeft());
               },
             ),
             // ListTile(
@@ -176,15 +170,18 @@ class _MainScreenState extends State<MainScreen> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               SizedBox(height: 100.h),
-              Padding(
-                padding: EdgeInsets.only(top: 35.h, bottom: 10.h),
-                child: Text(
-                  'What can I help?',
-                  style: GoogleFonts.firaCode(
-                    fontWeight: FontWeight.w400,
-                    textStyle: TextStyle(
-                      color: Colors.white,
-                      fontSize: 24.sp,
+              FadeInDown(
+                duration: const Duration(seconds: 1),
+                child: Padding(
+                  padding: EdgeInsets.only(top: 35.h, bottom: 10.h),
+                  child: Text(
+                    'What can I help?',
+                    style: GoogleFonts.firaCode(
+                      fontWeight: FontWeight.w400,
+                      textStyle: TextStyle(
+                        color: Colors.white,
+                        fontSize: 24.sp,
+                      ),
                     ),
                   ),
                 ),
@@ -198,12 +195,8 @@ class _MainScreenState extends State<MainScreen> {
                     // ASK BY TEXT INPUT
                     GestureDetector(
                       onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const AskByText(),
-                          ),
-                        );
+                        ScreenNavigator(cx: context).navigate(
+                            AskByText(), NavigatorTweens.rightToLeft());
                       },
                       child: Padding(
                         padding: EdgeInsets.only(top: 10.h, bottom: 0.h),
@@ -243,12 +236,8 @@ class _MainScreenState extends State<MainScreen> {
                     // ASK BY TEXT & IMAGE INPUT
                     GestureDetector(
                       onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const AskByImage(),
-                          ),
-                        );
+                        ScreenNavigator(cx: context).navigate(
+                            AskByImage(), NavigatorTweens.rightToLeft());
                       },
                       child: Padding(
                         padding: EdgeInsets.only(top: 10.h, bottom: 0.h),
@@ -291,11 +280,8 @@ class _MainScreenState extends State<MainScreen> {
               SizedBox(height: 30.h),
               GestureDetector(
                 onTap: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const QuestionListScreen(),
-                      ));
+                  Navigator.of(context).push(
+                      RouteUtils().createRouteUpDown(QuestionListScreen()));
                 },
                 child: Text(
                   'History',
@@ -305,7 +291,7 @@ class _MainScreenState extends State<MainScreen> {
                     textStyle: TextStyle(
                       decoration: TextDecoration.underline,
                       color: Colors.white,
-                      fontSize: 12.sp,
+                      fontSize: 13.sp,
                     ),
                   ),
                 ),

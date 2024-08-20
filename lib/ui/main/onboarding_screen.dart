@@ -1,5 +1,7 @@
+import 'package:ebot/utils/route_utils.dart';
 import 'package:lottie/lottie.dart';
 import 'package:flutter/material.dart';
+import 'package:animate_do/animate_do.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:ebot/ui/main/authentication/login_screen.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -58,15 +60,18 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                   width: 300.w,
                   child: Lottie.asset('assets/lottie_bot.json'),
                 ),
-                Padding(
-                  padding: EdgeInsets.fromLTRB(0, 20.w, 0, 20.w),
-                  child: Text(
-                    'eBot',
-                    style: GoogleFonts.pixelifySans(
-                      textStyle: TextStyle(
-                          color: Colors.white,
-                          letterSpacing: .5,
-                          fontSize: 36.sp),
+                FadeInDown(
+                  duration: const Duration(seconds: 1),
+                  child: Padding(
+                    padding: EdgeInsets.fromLTRB(0, 20.w, 0, 20.w),
+                    child: Text(
+                      'eBot',
+                      style: GoogleFonts.pixelifySans(
+                        textStyle: TextStyle(
+                            color: Colors.white,
+                            letterSpacing: .5,
+                            fontSize: 36.sp),
+                      ),
                     ),
                   ),
                 ),
@@ -74,12 +79,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                   padding: EdgeInsets.only(top: 30.h, bottom: 10.h),
                   child: ElevatedButton(
                     onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const LoginScreen(),
-                        ),
-                      );
+                      ScreenNavigator(cx: context).navigate(
+                          LoginScreen(), NavigatorTweens.rightToLeft());
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.white,

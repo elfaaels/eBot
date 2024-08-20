@@ -112,85 +112,78 @@ class GlobalWidget {
       context: context,
       barrierDismissible: false,
       builder: (_) {
-        return WillPopScope(
-            child: Center(
-              child: Container(
-                width: 240.w,
-                padding: EdgeInsets.all(20.w),
-                decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.all(Radius.circular(4.w))),
-                child: Material(
-                  color: Colors.white,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    mainAxisSize: MainAxisSize.min,
-                    children: <Widget>[
-                      Center(
-                        child: Text(
-                          message,
-                          style: GoogleFonts.firaCode(
-                            fontWeight: FontWeight.w400,
-                            textStyle: TextStyle(
-                              color: Colors.black,
-                              fontSize: 16.sp,
-                            ),
-                          ),
+        return Center(
+          child: Container(
+            width: 240.w,
+            padding: EdgeInsets.all(20.w),
+            decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.all(Radius.circular(4.w))),
+            child: Material(
+              color: Colors.white,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[
+                  Center(
+                    child: Text(
+                      message,
+                      style: GoogleFonts.firaCode(
+                        fontWeight: FontWeight.w400,
+                        textStyle: TextStyle(
+                          color: Colors.black,
+                          fontSize: 16.sp,
                         ),
                       ),
-                      InkWell(
-                        child: Padding(
-                            padding: EdgeInsets.fromLTRB(0.w, 24.w, 0.w, 0.w),
-                            child: SizedBox(
-                              height: 46.w,
-                              width: MediaQuery.of(context).size.width,
-                              child: TextButton(
-                                  style: TextButton.styleFrom(
-                                    shape: RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(4.w)),
-                                    backgroundColor:
-                                        ThemeColor.mainBackgroundColor,
-                                  ),
-                                  child: Text(
-                                    "OK",
-                                    style: TextStyle(
-                                        fontFamily: "bold",
-                                        fontSize: 13.sp,
-                                        color: Colors.white),
-                                  ),
-                                  onPressed: () {
-                                    if (isLogout) {
-                                      final result = AuthService().signOut();
-                                      if (result != null) {
-                                        Navigator.of(context)
-                                            .pushAndRemoveUntil(
-                                                MaterialPageRoute(
-                                                    builder:
-                                                        (context) =>
-                                                            OnboardingScreen()),
-                                                (Route<dynamic> route) =>
-                                                    false);
-                                        if (kDebugMode) {
-                                          log('SUCCESS: Logout');
-                                        }
-                                      } else {
-                                        if (kDebugMode) {
-                                          log('ERROR: Logout');
-                                        }
-                                      }
-                                    } else {
-                                      Navigator.pop(context);
-                                    }
-                                  }),
-                            )),
-                      )
-                    ],
+                    ),
                   ),
-                ),
+                  InkWell(
+                    child: Padding(
+                        padding: EdgeInsets.fromLTRB(0.w, 24.w, 0.w, 0.w),
+                        child: SizedBox(
+                          height: 46.w,
+                          width: MediaQuery.of(context).size.width,
+                          child: TextButton(
+                              style: TextButton.styleFrom(
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(4.w)),
+                                backgroundColor: ThemeColor.mainBackgroundColor,
+                              ),
+                              child: Text(
+                                "OK",
+                                style: TextStyle(
+                                    fontFamily: "bold",
+                                    fontSize: 13.sp,
+                                    color: Colors.white),
+                              ),
+                              onPressed: () {
+                                if (isLogout) {
+                                  final result = AuthService().signOut();
+                                  if (result != null) {
+                                    Navigator.of(context).pushAndRemoveUntil(
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                OnboardingScreen()),
+                                        (Route<dynamic> route) => false);
+                                    if (kDebugMode) {
+                                      log('SUCCESS: Logout');
+                                    }
+                                  } else {
+                                    if (kDebugMode) {
+                                      log('ERROR: Logout');
+                                    }
+                                  }
+                                } else {
+                                  Navigator.pop(context);
+                                }
+                              }),
+                        )),
+                  )
+                ],
               ),
             ),
-            onWillPop: () async => false);
+          ),
+        );
       },
     );
   }
