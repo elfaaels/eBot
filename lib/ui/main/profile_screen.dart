@@ -1,4 +1,5 @@
 import 'package:ebot/bloc/profile_bloc/profile_bloc.dart';
+import 'package:ebot/services/firestore_config.dart';
 import 'package:ebot/shared/theme.dart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -13,6 +14,7 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
+  final DatabaseService _databaseService = DatabaseService();
   String? profileEmail;
 
   @override
@@ -38,13 +40,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
         ),
       ),
       body: BlocProvider(
-        create: (context) => ProfileBloc(),
+        create: (context) => ProfileBloc(
+          databaseService: _databaseService,
+        )..add(ProfileLoaded()),
         child: BlocListener<ProfileBloc, ProfileState>(
           listener: (context, state) {},
           child: BlocBuilder<ProfileBloc, ProfileState>(
             builder: (context, state) {
               if (state is ProfileSucceed) {
-                profileEmail = state.user?.email;
+                profileEmail = state.user!.email;
               }
               return ListView(
                 children: [

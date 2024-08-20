@@ -20,7 +20,9 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
         final result = await databaseService!.getUserData();
         log("Profile success");
         emit(ProfileSucceed(user: result));
-      } catch (e) {}
+      } catch (e) {
+        emit(ProfileError(errorType: e.toString()));
+      }
     });
   }
 }
