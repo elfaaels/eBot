@@ -1,5 +1,6 @@
 import 'package:ebot/bloc/login_bloc/login_bloc.dart';
 import 'package:ebot/shared/theme.dart.dart';
+import 'package:ebot/ui/main/authentication/forgot_password.dart';
 import 'package:ebot/ui/main/authentication/register_screen.dart';
 import 'package:ebot/ui/main/core/main_screen.dart';
 import 'package:ebot/utils/route_utils.dart';
@@ -199,16 +200,22 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                       ),
                       // FORGOT PASSWORD
-                      Padding(
-                        padding:
-                            EdgeInsets.only(left: 20.w, right: 20.w, top: 16.w),
-                        child: Text(
-                          'Forgot Password?',
-                          style: GoogleFonts.firaCode(
-                            fontWeight: FontWeight.normal,
-                            textStyle: TextStyle(
-                              color: Colors.teal,
-                              fontSize: 12.sp,
+                      GestureDetector(
+                        onTap: () {
+                          ScreenNavigator(cx: context).navigate(
+                              ForgotPassword(), NavigatorTweens.rightToLeft());
+                        },
+                        child: Padding(
+                          padding: EdgeInsets.only(
+                              left: 20.w, right: 20.w, top: 16.w),
+                          child: Text(
+                            'Forgot Password?',
+                            style: GoogleFonts.firaCode(
+                              fontWeight: FontWeight.normal,
+                              textStyle: TextStyle(
+                                color: Colors.teal,
+                                fontSize: 12.sp,
+                              ),
                             ),
                           ),
                         ),

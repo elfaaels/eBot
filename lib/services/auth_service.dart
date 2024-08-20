@@ -2,6 +2,8 @@ import 'package:ebot/services/firestore_config.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class AuthService {
+  final _auth = FirebaseAuth.instance;
+
   Future<User?> register(
       {required String email,
       required String password,
@@ -53,5 +55,15 @@ class AuthService {
 
   Future<void>? signOut() async {
     await FirebaseAuth.instance.signOut();
+  }
+
+  Future<String?> resetPassword({required String email}) async {
+    String? message;
+
+    await _auth
+        .sendPasswordResetEmail(email: email)
+        .then((value) => message = 'SUCCESS')
+        .catchError((e) => message = 'ERROR_RESET_PASSWORD: ${e.toString()}');
+    return message;
   }
 }
