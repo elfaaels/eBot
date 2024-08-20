@@ -49,16 +49,34 @@ class _ProfileScreenState extends State<ProfileScreen> {
             builder: (context, state) {
               if (state is ProfileSucceed) {
                 profileEmail = state.user!.email;
+                return ListView(
+                  children: [
+                    _buildSectionHeader('PROFILE INFORMATION'),
+                    _buildListRow(
+                        'Email', Icons.person, profileEmail, Colors.blue),
+                    _buildSectionFooter(
+                        '© 2024 eBot. Copyright All Rights Reserved.'),
+                  ],
+                );
+              } else if (state is ProfileLoading) {
+                return CircularProgressIndicator();
+              } else {
+                return Container(
+                  child: Center(
+                    child: Text(
+                      'ERROR',
+                      textAlign: TextAlign.center,
+                      style: GoogleFonts.firaCode(
+                        fontWeight: FontWeight.w500,
+                        textStyle: TextStyle(
+                          color: Colors.white,
+                          fontSize: 14.sp,
+                        ),
+                      ),
+                    ),
+                  ),
+                );
               }
-              return ListView(
-                children: [
-                  _buildSectionHeader('PROFILE INFORMATION'),
-                  _buildListRow(
-                      'Email', Icons.person, profileEmail, Colors.blue),
-                  _buildSectionFooter(
-                      '© 2024 eBot. Copyright All Rights Reserved.'),
-                ],
-              );
             },
           ),
         ),

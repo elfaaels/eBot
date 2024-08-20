@@ -180,7 +180,7 @@ class DatabaseService {
     });
   }
 
-  deleteComplaint(String id) async {
+  deleteQuestion(String id) async {
     await questions.doc(id).delete();
     log('Question: deleted' + id);
   }

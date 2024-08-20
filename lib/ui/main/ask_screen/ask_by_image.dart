@@ -31,7 +31,7 @@ class _AskByImageState extends State<AskByImage> {
       question.createdAt = DateTime.now().toString();
       question.textQuestion = _questionTextController.text;
       question.answer = ebotAnswer;
-      question.imageQuestion = false;
+      question.imageQuestion = true;
       question.imageUrl = _image?.path;
       await DatabaseService().addQuestion(question: question);
       if (kDebugMode) {

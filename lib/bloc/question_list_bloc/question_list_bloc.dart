@@ -22,6 +22,25 @@ class QuestionListBloc extends Bloc<QuestionListEvent, QuestionListState> {
         if (result.isNotEmpty) {
           log("question success");
           emit(QuestionListSuccess(result));
+        } else {
+          log("question empty");
+          emit(QuestionListEmpty());
+        }
+      } catch (e) {
+        log(e.toString());
+        emit(QuestionListError(error: e.toString()));
+      }
+    });
+    on<QuestionDelete>((event, emit) async {
+      try {
+        emit(QuestionListLoading());
+        log("question loading");
+        final result = await databaseService.deleteQuestion(event.id);
+        if (result.isNotEmpty) {
+          log("question deleted");
+        } else {
+          log("question error");
+          emit(QuestionListError());
         }
       } catch (e) {
         log(e.toString());

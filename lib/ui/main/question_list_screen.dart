@@ -134,7 +134,12 @@ class _QuestionListScreenState extends State<QuestionListScreen> {
                         direction: DismissDirection.endToStart,
                         onDismissed: (direction) {
                           setState(() {
-                            // questions.removeAt(index);
+                            BlocProvider.of<QuestionListBloc>(context).add(
+                              QuestionDelete(
+                                questions[index].id.toString(),
+                              ),
+                            );
+                            questions.removeAt(index);
                           });
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(content: Text("$item dismissed")),

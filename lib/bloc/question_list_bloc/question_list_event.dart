@@ -10,3 +10,12 @@ class QuestionListLoaded extends QuestionListEvent {
   @override
   List<Object> get props => [];
 }
+
+class QuestionDelete extends QuestionListEvent {
+  final String id;
+
+  const QuestionDelete(this.id);
+
+  @override
+  List<Object> get props => [];
+}

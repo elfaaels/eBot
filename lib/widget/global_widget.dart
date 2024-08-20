@@ -125,6 +125,19 @@ class GlobalWidget {
                 mainAxisAlignment: MainAxisAlignment.start,
                 mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.pop(context);
+                    },
+                    child: Align(
+                      alignment: Alignment.topRight,
+                      child: Icon(
+                        Icons.cancel_outlined,
+                        color: Colors.red,
+                        size: 18.sp,
+                      ),
+                    ),
+                  ),
                   Center(
                     child: Text(
                       message,

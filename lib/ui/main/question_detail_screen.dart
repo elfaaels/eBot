@@ -15,7 +15,7 @@ class QuestionDetailScreen extends StatefulWidget {
   const QuestionDetailScreen(
       {super.key,
       this.questionText,
-      this.imageQuestion = false,
+      this.imageQuestion,
       this.answer,
       this.imageUrl,
       this.date});
