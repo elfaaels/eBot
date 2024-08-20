@@ -1,5 +1,7 @@
+import 'package:ebot/bloc/profile_bloc/profile_bloc.dart';
 import 'package:ebot/shared/theme.dart.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -11,6 +13,14 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
+  String? profileEmail;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -27,13 +37,27 @@ class _ProfileScreenState extends State<ProfileScreen> {
           },
         ),
       ),
-      body: ListView(
-        children: [
-          _buildSectionHeader('PROFILE INFORMATION'),
-          _buildListRow(
-              'Email', Icons.person, 'kendallroy@waystar.co', Colors.blue),
-          _buildSectionFooter('© 2024 eBot. Copyright All Rights Reserved.'),
-        ],
+      body: BlocProvider(
+        create: (context) => ProfileBloc(),
+        child: BlocListener<ProfileBloc, ProfileState>(
+          listener: (context, state) {},
+          child: BlocBuilder<ProfileBloc, ProfileState>(
+            builder: (context, state) {
+              if (state is ProfileSucceed) {
+                profileEmail = state.user?.email;
+              }
+              return ListView(
+                children: [
+                  _buildSectionHeader('PROFILE INFORMATION'),
+                  _buildListRow(
+                      'Email', Icons.person, profileEmail, Colors.blue),
+                  _buildSectionFooter(
+                      '© 2024 eBot. Copyright All Rights Reserved.'),
+                ],
+              );
+            },
+          ),
+        ),
       ),
     );
   }

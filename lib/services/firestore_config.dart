@@ -109,6 +109,24 @@ class DatabaseService {
     return user?.uid;
   }
 
+  Future<UserModel> getUserData() {
+    String? userId = getCurrentUserId();
+    if (userId != null) {
+      return FirebaseFirestore.instance
+          .collection('users')
+          .where('uid', isEqualTo: userId)
+          .get()
+          .then((snapshot) {
+        return UserModel(
+          uid: userId,
+          email: snapshot.docs.first['email'],
+        );
+      });
+    } else {
+      return Future.value(UserModel());
+    }
+  }
+
   Stream<QuerySnapshot> getUserDataStream() {
     String? userId = getCurrentUserId();
     if (userId != null) {
