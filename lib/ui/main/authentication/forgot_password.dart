@@ -1,6 +1,6 @@
 import 'package:ebot/bloc/forgot_password_bloc/forgot_password_bloc.dart';
 import 'package:ebot/shared/theme.dart.dart';
-import 'package:ebot/ui/main/init/onboarding_screen.dart';
+import 'package:ebot/ui/main/onboarding_screen.dart';
 import 'package:ebot/widget/global_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -37,6 +37,9 @@ class _ForgotPasswordState extends State<ForgotPassword> {
           listener: (context, state) {
             if (state is ForgotPasswordSucceed) {
               Navigator.pop(context);
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(content: Text(state.authMessage.toString())),
+              );
               Navigator.of(context).pushAndRemoveUntil(
                   MaterialPageRoute(builder: (context) => OnboardingScreen()),
                   (Route<dynamic> route) => false);
