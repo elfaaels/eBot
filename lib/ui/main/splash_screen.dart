@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lottie/lottie.dart';
+import 'dart:developer';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -37,9 +38,9 @@ class _SplashScreenState extends State<SplashScreen> {
           _navigateToNextScreen();
         } else if (state is SplashUnAuthenticated) {
           // To check Auth State
-          print('Splash Unauthenticated');
+          log('Splash Unauthenticated');
         } else if (state is SplashError) {
-          print('ERROR Routing Splash');
+          log('ERROR Routing Splash');
         }
       },
       child: BlocBuilder<SplashBloc, SplashState>(

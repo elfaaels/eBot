@@ -23,7 +23,7 @@ class FirestoreConfig {
       });
       returnValue = 'SUCCESS';
     } catch (e) {
-      print(e);
+      log(e.toString());
     }
     return returnValue;
   }
@@ -67,8 +67,8 @@ class FirestoreConfig {
           await FirebaseFirestore.instance.collection('users').doc(uid).get();
       return doc['username'];
     } catch (e) {
-      print(e);
-      return null;
+      log(e.toString());
+      throw Exception(e);
     }
   }
 
@@ -78,7 +78,8 @@ class FirestoreConfig {
           FirebaseFirestore.instance.collection('users');
       await users.doc(uid).update({'username': newUsername});
     } catch (e) {
-      print(e);
+      log(e.toString());
+      throw Exception(e);
     }
   }
 }
@@ -210,7 +211,7 @@ class DatabaseService {
           'imageUrl': question?.imageUrl,
           'user': currentUser?.toFirestore(),
         })
-        .then((value) => print("Question added successfully!"))
-        .catchError((error) => print("Failed to add Question: $error"));
+        .then((value) => log("Question added successfully!"))
+        .catchError((error) => log("Failed to add Question: $error"));
   }
 }
