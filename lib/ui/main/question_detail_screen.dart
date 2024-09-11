@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:ebot/shared/theme.dart.dart';
+import 'package:ebot/utils/date_format_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -104,7 +105,7 @@ class _QuestionDetailScreenState extends State<QuestionDetailScreen> {
               ),
               Divider(height: 50.w),
               Text(
-                widget.date ?? 'N/A',
+                DateFormatUtils.formatDate(widget.date ?? 'N/A'),
                 style: GoogleFonts.firaCode(
                   fontWeight: FontWeight.w400,
                   textStyle: TextStyle(
