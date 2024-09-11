@@ -1,7 +1,8 @@
 import 'dart:developer';
 
 import 'package:ebot/services/auth_service.dart';
-import 'package:ebot/ui/main/init/onboarding_screen.dart';
+import 'package:ebot/ui/main/authentication/login_screen.dart';
+import 'package:ebot/ui/main/onboarding_screen.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:ebot/shared/theme.dart.dart';

@@ -2,7 +2,7 @@ import 'dart:developer';
 import 'package:ebot/bloc/question_list_bloc/question_list_bloc.dart';
 import 'package:ebot/services/firestore_config.dart';
 import 'package:ebot/shared/theme.dart.dart';
-import 'package:ebot/ui/main/core/question_detail_screen.dart';
+import 'package:ebot/ui/main/question_detail_screen.dart';
 import 'package:ebot/widget/question_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

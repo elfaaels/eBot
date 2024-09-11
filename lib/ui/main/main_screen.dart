@@ -1,9 +1,9 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:ebot/shared/theme.dart.dart';
 import 'package:ebot/ui/main/ask_screen/ask_by_image.dart';
-import 'package:ebot/ui/main/core/information_screen.dart';
-import 'package:ebot/ui/main/core/profile_screen.dart';
-import 'package:ebot/ui/main/core/question_list_screen.dart';
+import 'package:ebot/ui/main/information_screen.dart';
+import 'package:ebot/ui/main/profile_screen.dart';
+import 'package:ebot/ui/main/question_list_screen.dart';
 import 'package:ebot/utils/route_utils.dart';
 import 'package:ebot/widget/global_widget.dart';
 import 'package:flutter/material.dart';

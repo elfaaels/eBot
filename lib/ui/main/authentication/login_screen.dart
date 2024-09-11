@@ -2,7 +2,7 @@ import 'package:ebot/bloc/login_bloc/login_bloc.dart';
 import 'package:ebot/shared/theme.dart.dart';
 import 'package:ebot/ui/main/authentication/forgot_password.dart';
 import 'package:ebot/ui/main/authentication/register_screen.dart';
-import 'package:ebot/ui/main/core/main_screen.dart';
+import 'package:ebot/ui/main/main_screen.dart';
 import 'package:ebot/utils/route_utils.dart';
 import 'package:ebot/widget/global_widget.dart';
 import 'package:flutter/material.dart';
