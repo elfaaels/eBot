@@ -135,7 +135,7 @@ class _AskByImageState extends State<AskByImage> {
                                 image: FileImage(File(
                                   _image!.path,
                                 )),
-                                fit: BoxFit.fill,
+                                fit: BoxFit.cover,
                               )
                             : null,
                       ),
@@ -161,7 +161,10 @@ class _AskByImageState extends State<AskByImage> {
                             ),
                           )
                         : ebotAnswerContent(),
-                    SizedBox(height: _ebotAnswer.isEmpty ? 150.h : 50.h),
+                    SizedBox(
+                        height: _ebotAnswer.isEmpty && _image == null
+                            ? 150.h
+                            : 50.h),
                     Padding(
                       padding: EdgeInsets.only(left: 14.w, right: 14.w),
                       child: TextFormField(
@@ -196,7 +199,11 @@ class _AskByImageState extends State<AskByImage> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Padding(
-                            padding: EdgeInsets.only(top: 60.h, bottom: 6.h),
+                            padding: EdgeInsets.only(
+                                top: _ebotAnswer.isEmpty && _image == null
+                                    ? 60.h
+                                    : 30.h,
+                                bottom: 6.h),
                             child: ElevatedButton(
                               onPressed: () {
                                 ImagePicker()
