@@ -2,32 +2,40 @@ import 'package:ebot/services/firestore_config.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class AuthService {
-  final _auth = FirebaseAuth.instance;
+  final FirebaseAuth _auth;
 
-  Future<User?> register(
-      {required String email,
-      required String password,
-      required String username}) async {
+  AuthService(this._auth);
+
+  Future<User?> register({
+    required String email,
+    required String password,
+    required String username,
+  }) async {
     try {
-      // await FirebaseAuth.instance
-      //     .createUserWithEmailAndPassword(email: email, password: password);
-      UserCredential userCredential = await FirebaseAuth.instance
-          .createUserWithEmailAndPassword(email: email, password: password);
+      UserCredential userCredential =
+          await _auth.createUserWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
       User? user = userCredential.user;
       if (user != null) {
         await FirestoreConfig().addUserToFirestore(
-            uid: user.uid, email: email, userName: username);
+          uid: user.uid,
+          email: email,
+          userName: username,
+        );
       }
       return user;
-      // } on FirebaseAuthException catch (e) {
-      //   if (e.code == 'weak-password') {
-      //     return 'The password provided is too weak.';
-      //   } else if (e.code == 'email-already-in-use') {
-      //     return 'The account already exists for that email.';
-      //   } else {
-      //     return e.message;
-      //   }
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'weak-password') {
+        throw 'The password provided is too weak.';
+      } else if (e.code == 'email-already-in-use') {
+        throw 'The account already exists for that email.';
+      } else {
+        throw e.message ?? 'An unknown error occurred.';
+      }
     } catch (e) {
+      print("ERROR" + e.toString());
       throw 'ERROR_REGISTER';
     }
   }

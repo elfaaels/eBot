@@ -1,8 +1,7 @@
 import 'dart:developer';
-
 import 'package:ebot/services/auth_service.dart';
-import 'package:ebot/ui/main/authentication/login_screen.dart';
 import 'package:ebot/ui/main/onboarding_screen.dart';
+import 'package:ebot/utils/get_it_utils.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:ebot/shared/theme.dart.dart';
@@ -10,6 +9,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class GlobalWidget {
+  final authService = getIt<AuthService>(); // Retrieve the AuthService instance
+
   void loadingAnimationPopUp(context) {
     showDialog(
         context: context,
@@ -172,7 +173,7 @@ class GlobalWidget {
                               ),
                               onPressed: () {
                                 if (isLogout) {
-                                  final result = AuthService().signOut();
+                                  final result = authService.signOut();
                                   if (result != null) {
                                     Navigator.of(context).pushAndRemoveUntil(
                                         MaterialPageRoute(
