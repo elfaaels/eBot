@@ -28,5 +28,5 @@ class ForgotPasswordSucceed extends ForgotPasswordState {
 
   const ForgotPasswordSucceed({this.authMessage});
   @override
-  List<Object> get props => [this.authMessage ?? 'N/A'];
+  List<Object> get props => [authMessage ?? 'N/A'];
 }

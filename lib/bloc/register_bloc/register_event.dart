@@ -16,5 +16,5 @@ class RegisterButtonPressed extends RegisterEvent {
   });
 
   @override
-  List<Object> get props => [this.email, this.password];
+  List<Object> get props => [email, password];
 }

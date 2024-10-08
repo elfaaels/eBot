@@ -28,5 +28,5 @@ final class RegisterSuccess extends RegisterState {
 
   const RegisterSuccess({this.returnValue, this.user});
   @override
-  List<Object> get props => [this.returnValue ?? 'N/A'];
+  List<Object> get props => [returnValue ?? 'N/A'];
 }

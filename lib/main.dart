@@ -16,8 +16,8 @@ void main() async {
     MultiBlocProvider(
       providers: [
         BlocProvider<SplashBloc>(
-          create: (context) =>
-              SplashBloc()..add(AppStarted()), // Initiate the App Start state
+          create: (context) => SplashBloc()
+            ..add(const AppStarted()), // Initiate the App Start state
         ),
         BlocProvider<MainBloc>(
           create: (BuildContext context) => MainBloc(),
@@ -42,7 +42,7 @@ class MyApp extends StatelessWidget {
         return MaterialApp(
           initialRoute: '/splash',
           routes: {
-            '/splash': (context) => SplashScreen(),
+            '/splash': (context) => const SplashScreen(),
           },
           debugShowCheckedModeBanner: false,
           title: 'eBot',

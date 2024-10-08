@@ -22,36 +22,33 @@ class GlobalWidget {
               shape: const RoundedRectangleBorder(
                   borderRadius: BorderRadius.all(Radius.circular(8.0))),
               contentPadding: const EdgeInsets.only(top: 10.0),
-              content: Container(
-                // width: 300.0,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  mainAxisSize: MainAxisSize.min,
-                  children: <Widget>[
-                    const Padding(
-                        padding: EdgeInsets.fromLTRB(12, 20, 12, 12),
-                        child: Center(
-                          child: CircularProgressIndicator(
-                            color: Colors.teal,
-                          ),
-                        )),
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(12, 12, 12, 12),
+              content: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[
+                  const Padding(
+                      padding: EdgeInsets.fromLTRB(12, 20, 12, 12),
                       child: Center(
-                        child: Text(
-                          "Please Wait",
-                          style: GoogleFonts.firaCode(
-                            fontWeight: FontWeight.normal,
-                            textStyle: TextStyle(
-                              color: Colors.black,
-                              fontSize: 14.sp,
-                            ),
+                        child: CircularProgressIndicator(
+                          color: Colors.teal,
+                        ),
+                      )),
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(12, 12, 12, 12),
+                    child: Center(
+                      child: Text(
+                        "Please Wait",
+                        style: GoogleFonts.firaCode(
+                          fontWeight: FontWeight.normal,
+                          textStyle: TextStyle(
+                            color: Colors.black,
+                            fontSize: 14.sp,
                           ),
                         ),
                       ),
-                    )
-                  ],
-                ),
+                    ),
+                  )
+                ],
               ),
             ),
           );
@@ -69,39 +66,36 @@ class GlobalWidget {
               shape: const RoundedRectangleBorder(
                   borderRadius: BorderRadius.all(Radius.circular(8.0))),
               contentPadding: const EdgeInsets.only(top: 10.0),
-              content: Container(
-                // width: 300.0,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  mainAxisSize: MainAxisSize.min,
-                  children: <Widget>[
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(12, 20, 12, 12),
-                      child: Center(
-                        child: Icon(
-                          Icons.cancel,
-                          color: Colors.red,
-                          size: 28.sp,
-                        ),
+              content: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(12, 20, 12, 12),
+                    child: Center(
+                      child: Icon(
+                        Icons.cancel,
+                        color: Colors.red,
+                        size: 28.sp,
                       ),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(12, 12, 12, 12),
-                      child: Center(
-                        child: Text(
-                          "Error has occurred",
-                          style: GoogleFonts.firaCode(
-                            fontWeight: FontWeight.normal,
-                            textStyle: TextStyle(
-                              color: Colors.black,
-                              fontSize: 14.sp,
-                            ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(12, 12, 12, 12),
+                    child: Center(
+                      child: Text(
+                        "Error has occurred",
+                        style: GoogleFonts.firaCode(
+                          fontWeight: FontWeight.normal,
+                          textStyle: TextStyle(
+                            color: Colors.black,
+                            fontSize: 14.sp,
                           ),
                         ),
                       ),
-                    )
-                  ],
-                ),
+                    ),
+                  )
+                ],
               ),
             ),
           );

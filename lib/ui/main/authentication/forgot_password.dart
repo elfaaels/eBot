@@ -41,7 +41,8 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                 SnackBar(content: Text(state.authMessage.toString())),
               );
               Navigator.of(context).pushAndRemoveUntil(
-                  MaterialPageRoute(builder: (context) => OnboardingScreen()),
+                  MaterialPageRoute(
+                      builder: (context) => const OnboardingScreen()),
                   (Route<dynamic> route) => false);
             } else if (state is ForgotPasswordError) {
               Navigator.pop(context);
@@ -53,166 +54,162 @@ class _ForgotPasswordState extends State<ForgotPassword> {
           child: BlocBuilder<ForgotPasswordBloc, ForgotPasswordState>(
             builder: (context, state) {
               return SingleChildScrollView(
-                child: Container(
-                  // alignment: Alignment.center,
-                  child: Column(
-                    // mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      SizedBox(height: 20.h),
-                      Padding(
-                        padding: EdgeInsets.only(left: 20.w, right: 10.w),
-                        child: Text(
-                          'Reset Password',
-                          style: GoogleFonts.firaCode(
-                            fontWeight: FontWeight.bold,
-                            textStyle: TextStyle(
+                child: Column(
+                  // mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SizedBox(height: 20.h),
+                    Padding(
+                      padding: EdgeInsets.only(left: 20.w, right: 10.w),
+                      child: Text(
+                        'Reset Password',
+                        style: GoogleFonts.firaCode(
+                          fontWeight: FontWeight.bold,
+                          textStyle: TextStyle(
+                            color: Colors.white,
+                            fontSize: 28.sp,
+                          ),
+                        ),
+                      ),
+                    ),
+                    // EMAIL FIELD
+                    Padding(
+                      padding:
+                          EdgeInsets.only(left: 20.w, right: 20.w, top: 24.w),
+                      child: Text(
+                        'Email',
+                        style: GoogleFonts.firaCode(
+                          fontWeight: FontWeight.normal,
+                          textStyle: TextStyle(
+                            color: Colors.white,
+                            fontSize: 14.sp,
+                          ),
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(
+                          left: 20.w, right: 20.w, top: 10.h, bottom: 10.h),
+                      child: TextFormField(
+                        controller: _emailTextController,
+                        decoration: InputDecoration(
+                          fillColor: Colors.white,
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(12.0),
+                            borderSide: const BorderSide(
                               color: Colors.white,
-                              fontSize: 28.sp,
                             ),
                           ),
-                        ),
-                      ),
-                      // EMAIL FIELD
-                      Padding(
-                        padding:
-                            EdgeInsets.only(left: 20.w, right: 20.w, top: 24.w),
-                        child: Text(
-                          'Email',
-                          style: GoogleFonts.firaCode(
-                            fontWeight: FontWeight.normal,
-                            textStyle: TextStyle(
-                              color: Colors.white,
-                              fontSize: 14.sp,
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(12.0),
+                            borderSide: const BorderSide(
+                              color: Colors.grey,
+                              width: 0.0,
                             ),
                           ),
-                        ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.only(
-                            left: 20.w, right: 20.w, top: 10.h, bottom: 10.h),
-                        child: TextFormField(
-                          controller: _emailTextController,
-                          decoration: InputDecoration(
-                            fillColor: Colors.white,
-                            focusedBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(12.0),
-                              borderSide: const BorderSide(
-                                color: Colors.white,
-                              ),
-                            ),
-                            enabledBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(12.0),
-                              borderSide: const BorderSide(
-                                color: Colors.grey,
-                                width: 0.0,
-                              ),
-                            ),
-                            hintText: 'hello@mail.com',
-                            hintStyle: TextStyle(
-                              color: Colors.grey[800],
-                              fontWeight: FontWeight.w400,
-                            ),
+                          hintText: 'hello@mail.com',
+                          hintStyle: TextStyle(
+                            color: Colors.grey[800],
+                            fontWeight: FontWeight.w400,
                           ),
-                          onSaved: (String? value) {},
-                          validator: (String? value) {
-                            return (value != null && value.contains('@'))
-                                ? 'Do not use the @ char.'
-                                : null;
-                          },
                         ),
-                      ),
-                      GestureDetector(
-                        onTap: () async {
-                          BlocProvider.of<ForgotPasswordBloc>(context).add(
-                            ResetButtonPressed(
-                                email: _emailTextController.text),
-                          );
+                        onSaved: (String? value) {},
+                        validator: (String? value) {
+                          return (value != null && value.contains('@'))
+                              ? 'Do not use the @ char.'
+                              : null;
                         },
+                      ),
+                    ),
+                    GestureDetector(
+                      onTap: () async {
+                        BlocProvider.of<ForgotPasswordBloc>(context).add(
+                          ResetButtonPressed(email: _emailTextController.text),
+                        );
+                      },
+                      child: Padding(
+                        padding:
+                            EdgeInsets.only(left: 20.w, right: 20.w, top: 16.w),
+                        child: Center(
+                          child: Container(
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(12),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.black.withOpacity(0.1),
+                                  spreadRadius: 5,
+                                  blurRadius: 7,
+                                  offset: const Offset(0, 3),
+                                ),
+                              ],
+                            ),
+                            height: 45.w,
+                            width: 300.w,
+                            child: Center(
+                              child: Text(
+                                'Reset',
+                                textAlign: TextAlign.left,
+                                style: GoogleFonts.firaCode(
+                                  fontWeight: FontWeight.w700,
+                                  textStyle: TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 12.sp,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    // DIVIDER
+                    Padding(
+                      padding:
+                          EdgeInsets.only(left: 40.w, right: 40.w, top: 20.w),
+                      child: Row(
+                        children: <Widget>[
+                          const Expanded(
+                            child: Divider(),
+                          ),
+                          Text(
+                            " OR ",
+                            style: GoogleFonts.firaCode(
+                              fontWeight: FontWeight.normal,
+                              textStyle: TextStyle(
+                                color: Colors.grey,
+                                fontSize: 12.sp,
+                              ),
+                            ),
+                          ),
+                          const Expanded(
+                            child: Divider(),
+                          ),
+                        ],
+                      ),
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.pop(context);
+                      },
+                      child: Center(
                         child: Padding(
                           padding: EdgeInsets.only(
                               left: 20.w, right: 20.w, top: 16.w),
-                          child: Center(
-                            child: Container(
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(12),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.black.withOpacity(0.1),
-                                    spreadRadius: 5,
-                                    blurRadius: 7,
-                                    offset: const Offset(0, 3),
-                                  ),
-                                ],
-                              ),
-                              height: 45.w,
-                              width: 300.w,
-                              child: Center(
-                                child: Text(
-                                  'Reset',
-                                  textAlign: TextAlign.left,
-                                  style: GoogleFonts.firaCode(
-                                    fontWeight: FontWeight.w700,
-                                    textStyle: TextStyle(
-                                      color: Colors.black,
-                                      fontSize: 12.sp,
-                                    ),
-                                  ),
-                                ),
+                          child: Text(
+                            'Login',
+                            style: GoogleFonts.firaCode(
+                              fontWeight: FontWeight.normal,
+                              textStyle: TextStyle(
+                                color: Colors.teal,
+                                fontSize: 12.sp,
                               ),
                             ),
                           ),
                         ),
                       ),
-                      // DIVIDER
-                      Padding(
-                        padding:
-                            EdgeInsets.only(left: 40.w, right: 40.w, top: 20.w),
-                        child: Row(
-                          children: <Widget>[
-                            const Expanded(
-                              child: Divider(),
-                            ),
-                            Text(
-                              " OR ",
-                              style: GoogleFonts.firaCode(
-                                fontWeight: FontWeight.normal,
-                                textStyle: TextStyle(
-                                  color: Colors.grey,
-                                  fontSize: 12.sp,
-                                ),
-                              ),
-                            ),
-                            const Expanded(
-                              child: Divider(),
-                            ),
-                          ],
-                        ),
-                      ),
-                      GestureDetector(
-                        onTap: () {
-                          Navigator.pop(context);
-                        },
-                        child: Center(
-                          child: Padding(
-                            padding: EdgeInsets.only(
-                                left: 20.w, right: 20.w, top: 16.w),
-                            child: Text(
-                              'Login',
-                              style: GoogleFonts.firaCode(
-                                fontWeight: FontWeight.normal,
-                                textStyle: TextStyle(
-                                  color: Colors.teal,
-                                  fontSize: 12.sp,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               );
             },

@@ -10,5 +10,5 @@ class ResetButtonPressed extends ForgotPasswordEvent {
   const ResetButtonPressed({required this.email});
 
   @override
-  List<Object> get props => [this.email];
+  List<Object> get props => [email];
 }

@@ -12,7 +12,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
         getIt<AuthService>(); // Retrieve the AuthService instance
     on<LoginEvent>((event, emit) {});
     on<LoginButtonPressed>((event, emit) async {
-      emit(LoginLoading());
+      emit(const LoginLoading());
       try {
         final message = await authService.login(
           email: event.email,

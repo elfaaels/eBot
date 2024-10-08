@@ -1,5 +1,4 @@
 import 'dart:developer';
-
 import 'package:bloc/bloc.dart';
 import 'package:ebot/model/question.dart';
 import 'package:ebot/services/firestore_config.dart';
@@ -16,7 +15,7 @@ class QuestionListBloc extends Bloc<QuestionListEvent, QuestionListState> {
     on<QuestionListEvent>((event, emit) {});
     on<QuestionListLoaded>((event, emit) async {
       try {
-        emit(QuestionListLoading());
+        emit(const QuestionListLoading());
         log("question loading");
         final result = await databaseService.getQuestionsForCurrentUser();
         if (result.isNotEmpty) {
@@ -24,7 +23,7 @@ class QuestionListBloc extends Bloc<QuestionListEvent, QuestionListState> {
           emit(QuestionListSuccess(result));
         } else {
           log("question empty");
-          emit(QuestionListEmpty());
+          emit(const QuestionListEmpty());
         }
       } catch (e) {
         log(e.toString());
@@ -33,14 +32,14 @@ class QuestionListBloc extends Bloc<QuestionListEvent, QuestionListState> {
     });
     on<QuestionDelete>((event, emit) async {
       try {
-        emit(QuestionListLoading());
+        emit(const QuestionListLoading());
         log("question loading");
         final result = await databaseService.deleteQuestion(event.id);
         if (result.isNotEmpty) {
           log("question deleted");
         } else {
           log("question error");
-          emit(QuestionListError());
+          emit(const QuestionListError());
         }
       } catch (e) {
         log(e.toString());

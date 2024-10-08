@@ -47,7 +47,7 @@ class _AskByTextState extends State<AskByText> {
     setState(() {
       isLoading = true;
     });
-    Future.delayed(Duration(seconds: 2), () {
+    Future.delayed(const Duration(seconds: 2), () {
       GenerativeModel model = GenerativeModel(
           model: 'gemini-1.5-flash-latest', apiKey: ApiConfig().apiKey);
       model.generateContent([Content.text(_questionTextController.text)]).then(
@@ -110,14 +110,14 @@ class _AskByTextState extends State<AskByText> {
               GlobalWidget().loadingAnimationPopUp(context);
             } else if (state is AskByTextError) {
               if (kDebugMode) {
-                log('ERROR:' + state.error!);
+                log('ERROR:${state.error!}');
               }
             }
           },
           child: BlocBuilder<AskByTextBloc, AskByTextState>(
             builder: (context, state) {
               return isLoading
-                  ? LoadingScreenWidget()
+                  ? const LoadingScreenWidget()
                   : Container(
                       alignment: Alignment.center,
                       child: SingleChildScrollView(

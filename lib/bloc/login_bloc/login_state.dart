@@ -28,5 +28,5 @@ class LoginAuthenticated extends LoginState {
 
   const LoginAuthenticated({required this.authMessage});
   @override
-  List<Object> get props => [this.authMessage];
+  List<Object> get props => [authMessage];
 }

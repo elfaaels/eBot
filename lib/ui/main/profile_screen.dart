@@ -60,17 +60,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
               } else if (state is ProfileLoading) {
                 return const Center(child: CircularProgressIndicator());
               } else {
-                return Container(
-                  child: Center(
-                    child: Text(
-                      'ERROR',
-                      textAlign: TextAlign.center,
-                      style: GoogleFonts.firaCode(
-                        fontWeight: FontWeight.w500,
-                        textStyle: TextStyle(
-                          color: Colors.white,
-                          fontSize: 14.sp,
-                        ),
+                return Center(
+                  child: Text(
+                    'ERROR',
+                    textAlign: TextAlign.center,
+                    style: GoogleFonts.firaCode(
+                      fontWeight: FontWeight.w500,
+                      textStyle: TextStyle(
+                        color: Colors.white,
+                        fontSize: 14.sp,
                       ),
                     ),
                   ),

@@ -1,5 +1,4 @@
 import 'package:bloc/bloc.dart';
-import 'package:meta/meta.dart';
 
 part 'ask_by_image_event.dart';
 part 'ask_by_image_state.dart';

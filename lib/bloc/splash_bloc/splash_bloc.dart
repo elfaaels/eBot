@@ -8,11 +8,11 @@ class SplashBloc extends Bloc<SplashEvent, SplashState> {
   SplashBloc() : super(SplashInitial()) {
     on<SplashEvent>((event, emit) {});
     on<AppStarted>((event, emit) async {
-      emit(SplashLoading());
+      emit(const SplashLoading());
       try {
         emit(SplashInitial());
       } catch (e) {
-        emit(SplashError());
+        emit(const SplashError());
       }
     });
   }

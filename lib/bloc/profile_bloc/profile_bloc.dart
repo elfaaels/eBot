@@ -15,7 +15,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
     on<ProfileEvent>((event, emit) {});
     on<ProfileLoaded>((event, emit) async {
       try {
-        emit(ProfileLoading());
+        emit(const ProfileLoading());
         log("Profile loading");
         final result = await databaseService!.getUserData();
         log("Profile success");

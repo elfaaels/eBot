@@ -84,7 +84,7 @@ class _QuestionDetailScreenState extends State<QuestionDetailScreen> {
               ),
               Divider(height: 50.w),
               isImage == true
-                  ? Container(
+                  ? SizedBox(
                       height: 250.w,
                       width: 200.w,
                       child: Image.file(

@@ -109,8 +109,8 @@ class _MainScreenState extends State<MainScreen> {
                 ),
               ),
               onTap: () {
-                ScreenNavigator(cx: context)
-                    .navigate(ProfileScreen(), NavigatorTweens.rightToLeft());
+                ScreenNavigator(cx: context).navigate(
+                    const ProfileScreen(), NavigatorTweens.rightToLeft());
               },
             ),
             ListTile(
@@ -129,7 +129,7 @@ class _MainScreenState extends State<MainScreen> {
               ),
               onTap: () {
                 ScreenNavigator(cx: context).navigate(
-                    InformationScreen(), NavigatorTweens.rightToLeft());
+                    const InformationScreen(), NavigatorTweens.rightToLeft());
               },
             ),
             // ListTile(
@@ -196,7 +196,7 @@ class _MainScreenState extends State<MainScreen> {
                     GestureDetector(
                       onTap: () {
                         ScreenNavigator(cx: context).navigate(
-                            AskByText(), NavigatorTweens.rightToLeft());
+                            const AskByText(), NavigatorTweens.rightToLeft());
                       },
                       child: Padding(
                         padding: EdgeInsets.only(top: 10.h, bottom: 0.h),
@@ -237,7 +237,7 @@ class _MainScreenState extends State<MainScreen> {
                     GestureDetector(
                       onTap: () {
                         ScreenNavigator(cx: context).navigate(
-                            AskByImage(), NavigatorTweens.rightToLeft());
+                            const AskByImage(), NavigatorTweens.rightToLeft());
                       },
                       child: Padding(
                         padding: EdgeInsets.only(top: 10.h, bottom: 0.h),
@@ -280,8 +280,8 @@ class _MainScreenState extends State<MainScreen> {
               SizedBox(height: 30.h),
               GestureDetector(
                 onTap: () {
-                  Navigator.of(context).push(
-                      RouteUtils().createRouteUpDown(QuestionListScreen()));
+                  Navigator.of(context).push(RouteUtils()
+                      .createRouteUpDown(const QuestionListScreen()));
                 },
                 child: Text(
                   'History',

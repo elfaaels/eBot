@@ -18,9 +18,9 @@ class AskButtonPressed extends AskByTextEvent {
 
   @override
   List<Object> get props => [
-        this.textQuestion,
-        this.imageQuestion ?? 'N/A',
-        this.ebotAnswer ?? 'N/A',
-        this.imageUrl ?? 'N/A'
+        textQuestion,
+        imageQuestion ?? 'N/A',
+        ebotAnswer ?? 'N/A',
+        imageUrl ?? 'N/A'
       ];
 }

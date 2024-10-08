@@ -46,7 +46,7 @@ class _AskByImageState extends State<AskByImage> {
     setState(() {
       isLoading = true;
     });
-    Future.delayed(Duration(seconds: 2), () {
+    Future.delayed(const Duration(seconds: 2), () {
       GenerativeModel model = GenerativeModel(
           model: 'gemini-1.5-flash-latest', apiKey: ApiConfig().apiKey);
 
@@ -95,7 +95,7 @@ class _AskByImageState extends State<AskByImage> {
   @override
   Widget build(BuildContext context) {
     return isLoading
-        ? LoadingScreenWidget()
+        ? const LoadingScreenWidget()
         : Scaffold(
             // resizeToAvoidBottomInset: false,
             backgroundColor: const Color(0XFF1E201E),

@@ -12,7 +12,7 @@ class ForgotPasswordBloc
     final authService =
         getIt<AuthService>(); // Retrieve the AuthService instance
     on<ResetButtonPressed>((event, emit) async {
-      emit(ForgotPasswordLoading());
+      emit(const ForgotPasswordLoading());
       try {
         final message = await authService.resetPassword(email: event.email);
         emit(ForgotPasswordSucceed(authMessage: message ?? 'N/A'));

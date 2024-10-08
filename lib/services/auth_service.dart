@@ -35,7 +35,6 @@ class AuthService {
         throw e.message ?? 'An unknown error occurred.';
       }
     } catch (e) {
-      print("ERROR" + e.toString());
       throw 'ERROR_REGISTER';
     }
   }

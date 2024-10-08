@@ -168,7 +168,7 @@ class DatabaseService {
         .map((snapshot) {
       return snapshot.docs.map((doc) {
         Map<String, dynamic> data = doc.data();
-        log("data: " + data.toString());
+        log("data: $data");
         return Question(
           id: doc.id,
           textQuestion: data['textQuestion'],
@@ -183,7 +183,7 @@ class DatabaseService {
 
   deleteQuestion(String id) async {
     await questions.doc(id).delete();
-    log('Question: deleted' + id);
+    log('Question: deleted$id');
   }
 
   UserModel? getCurrentUser() {

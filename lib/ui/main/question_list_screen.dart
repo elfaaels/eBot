@@ -83,14 +83,12 @@ class _QuestionListScreenState extends State<QuestionListScreen> {
       body: BlocProvider<QuestionListBloc>(
         create: (context) => QuestionListBloc(
           databaseService: _databaseService,
-        )..add(QuestionListLoaded()),
+        )..add(const QuestionListLoaded()),
         child: BlocListener<QuestionListBloc, QuestionListState>(
-          listener: (context, state) {
-            // TODO: implement listener
-          },
+          listener: (context, state) {},
           child: BlocBuilder<QuestionListBloc, QuestionListState>(
             builder: (context, state) {
-              log("BLOC STATE: " + state.toString());
+              log("BLOC STATE: $state");
               if (state is QuestionListSuccess) {
                 final questions = state.questions;
                 log(questions.toString());
@@ -112,7 +110,8 @@ class _QuestionListScreenState extends State<QuestionListScreen> {
                             border: Border.all(width: 1, color: Colors.red),
                             borderRadius: BorderRadius.circular(12.0),
                           ),
-                          child: Align(
+                          child: const Align(
+                            alignment: Alignment.centerRight,
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.end,
                               children: <Widget>[
@@ -128,7 +127,6 @@ class _QuestionListScreenState extends State<QuestionListScreen> {
                                 SizedBox(width: 20),
                               ],
                             ),
-                            alignment: Alignment.centerRight,
                           ),
                         ),
                         direction: DismissDirection.endToStart,
@@ -170,16 +168,12 @@ class _QuestionListScreenState extends State<QuestionListScreen> {
                   ),
                 );
               } else if (state is QuestionListLoading) {
-                return Container(
-                  child: Center(
-                    child: CircularProgressIndicator(),
-                  ),
+                return const Center(
+                  child: CircularProgressIndicator(),
                 );
               } else {
-                return Container(
-                  child: Center(
-                    child: _emptyState(),
-                  ),
+                return Center(
+                  child: _emptyState(),
                 );
               }
             },
