@@ -19,7 +19,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
   }
 
@@ -30,7 +29,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
       appBar: AppBar(
         backgroundColor: ThemeColor.mainBackgroundColor,
         leading: IconButton(
-          icon: Icon(
+          icon: const Icon(
             Icons.arrow_back,
             color: Colors.white,
           ),
@@ -42,7 +41,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
       body: BlocProvider(
         create: (context) => ProfileBloc(
           databaseService: _databaseService,
-        )..add(ProfileLoaded()),
+        )..add(const ProfileLoaded()),
         child: BlocListener<ProfileBloc, ProfileState>(
           listener: (context, state) {},
           child: BlocBuilder<ProfileBloc, ProfileState>(
@@ -59,7 +58,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   ],
                 );
               } else if (state is ProfileLoading) {
-                return Center(child: CircularProgressIndicator());
+                return const Center(child: CircularProgressIndicator());
               } else {
                 return Container(
                   child: Center(
@@ -133,29 +132,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
         ),
       ),
       subtitle: content != null ? Text(content) : null,
-    );
-  }
-
-  Widget _buildListRowWithLink(String label, IconData icon, String linkLabel,
-      Color tintColor, String linkDestination) {
-    return ListTile(
-      leading: Icon(icon, color: tintColor),
-      title: Text(label),
-      subtitle: GestureDetector(
-        onTap: () {
-          // Handle link tap
-        },
-        child: Text(
-          linkLabel,
-          style: GoogleFonts.firaCode(
-            fontWeight: FontWeight.w500,
-            textStyle: TextStyle(
-              color: Colors.blue,
-              fontSize: 14.sp,
-            ),
-          ),
-        ),
-      ),
     );
   }
 }

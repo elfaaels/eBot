@@ -6,7 +6,7 @@ import 'package:google_fonts/google_fonts.dart';
 class InformationScreen extends StatelessWidget {
   final ValueNotifier<bool>? isPresented;
 
-  const InformationScreen({Key? key, this.isPresented}) : super(key: key);
+  const InformationScreen({super.key, this.isPresented});
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +15,7 @@ class InformationScreen extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: ThemeColor.mainBackgroundColor,
         leading: IconButton(
-          icon: Icon(
+          icon: const Icon(
             Icons.arrow_back,
             color: Colors.white,
           ),
@@ -98,26 +98,26 @@ class InformationScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildListRowWithLink(String label, IconData icon, String linkLabel,
-      Color tintColor, String linkDestination) {
-    return ListTile(
-      leading: Icon(icon, color: tintColor),
-      title: Text(label),
-      subtitle: GestureDetector(
-        onTap: () {
-          // Handle link tap
-        },
-        child: Text(
-          linkLabel,
-          style: GoogleFonts.firaCode(
-            fontWeight: FontWeight.w500,
-            textStyle: TextStyle(
-              color: Colors.blue,
-              fontSize: 14.sp,
-            ),
-          ),
-        ),
-      ),
-    );
-  }
+  // Widget _buildListRowWithLink(String label, IconData icon, String linkLabel,
+  //     Color tintColor, String linkDestination) {
+  //   return ListTile(
+  //     leading: Icon(icon, color: tintColor),
+  //     title: Text(label),
+  //     subtitle: GestureDetector(
+  //       onTap: () {
+  //         // Handle link tap
+  //       },
+  //       child: Text(
+  //         linkLabel,
+  //         style: GoogleFonts.firaCode(
+  //           fontWeight: FontWeight.w500,
+  //           textStyle: TextStyle(
+  //             color: Colors.blue,
+  //             fontSize: 14.sp,
+  //           ),
+  //         ),
+  //       ),
+  //     ),
+  //   );
+  // }
 }

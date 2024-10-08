@@ -16,19 +16,19 @@ class GlobalWidget {
         context: context,
         barrierDismissible: false,
         builder: (BuildContext context) {
-          return WillPopScope(
-            onWillPop: null,
-            child: new AlertDialog(
-              shape: RoundedRectangleBorder(
+          return PopScope(
+            canPop: false,
+            child: AlertDialog(
+              shape: const RoundedRectangleBorder(
                   borderRadius: BorderRadius.all(Radius.circular(8.0))),
-              contentPadding: EdgeInsets.only(top: 10.0),
+              contentPadding: const EdgeInsets.only(top: 10.0),
               content: Container(
                 // width: 300.0,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   mainAxisSize: MainAxisSize.min,
                   children: <Widget>[
-                    Padding(
+                    const Padding(
                         padding: EdgeInsets.fromLTRB(12, 20, 12, 12),
                         child: Center(
                           child: CircularProgressIndicator(
@@ -36,7 +36,7 @@ class GlobalWidget {
                           ),
                         )),
                     Padding(
-                      padding: EdgeInsets.fromLTRB(12, 12, 12, 12),
+                      padding: const EdgeInsets.fromLTRB(12, 12, 12, 12),
                       child: Center(
                         child: Text(
                           "Please Wait",
@@ -63,12 +63,12 @@ class GlobalWidget {
         context: context,
         barrierDismissible: false,
         builder: (BuildContext context) {
-          return WillPopScope(
-            onWillPop: null,
-            child: new AlertDialog(
-              shape: RoundedRectangleBorder(
+          return PopScope(
+            canPop: false,
+            child: AlertDialog(
+              shape: const RoundedRectangleBorder(
                   borderRadius: BorderRadius.all(Radius.circular(8.0))),
-              contentPadding: EdgeInsets.only(top: 10.0),
+              contentPadding: const EdgeInsets.only(top: 10.0),
               content: Container(
                 // width: 300.0,
                 child: Column(
@@ -76,7 +76,7 @@ class GlobalWidget {
                   mainAxisSize: MainAxisSize.min,
                   children: <Widget>[
                     Padding(
-                      padding: EdgeInsets.fromLTRB(12, 20, 12, 12),
+                      padding: const EdgeInsets.fromLTRB(12, 20, 12, 12),
                       child: Center(
                         child: Icon(
                           Icons.cancel,
@@ -86,7 +86,7 @@ class GlobalWidget {
                       ),
                     ),
                     Padding(
-                      padding: EdgeInsets.fromLTRB(12, 12, 12, 12),
+                      padding: const EdgeInsets.fromLTRB(12, 12, 12, 12),
                       child: Center(
                         child: Text(
                           "Error has occurred",
@@ -178,7 +178,7 @@ class GlobalWidget {
                                     Navigator.of(context).pushAndRemoveUntil(
                                         MaterialPageRoute(
                                             builder: (context) =>
-                                                OnboardingScreen()),
+                                                const OnboardingScreen()),
                                         (Route<dynamic> route) => false);
                                     if (kDebugMode) {
                                       log('SUCCESS: Logout');
