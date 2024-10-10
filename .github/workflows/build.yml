@@ -9,10 +9,10 @@ on:
     branches: ["master"]
 
 jobs:
-  flutter_job:
+  build_android:
     # The machine, we can also use windows-latest or ubuntu-latest
     # We are choosing macos-latest because we will be also building for iOS
-    runs-on: macos-latest
+    runs-on: ubuntu-latest
 
     steps:
       # Clones the project on the machine
@@ -65,3 +65,11 @@ jobs:
           serviceCredentialsFileContent: ${{ secrets.CREDENTIAL_FILE_CONTENT }}
           groups: all_testers
           file: build/app/outputs/flutter-apk/app-release.apk
+
+  build_ios:
+    runs-on: macos-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+    # Build the iOS app (add your iOS build steps here)
