@@ -102,6 +102,17 @@ jobs:
       - name: Build iOS app
         run: flutter build ios --no-codesign
 
+      # Install Firebase CLI
+      - name: Install Firebase CLI
+        run: |
+          curl -sL https://firebase.tools | bash
+
+      # Authenticate Firebase CLI using service account credentials
+      - name: Authenticate Firebase
+        env:
+          FIREBASE_TOKEN: ${{ secrets.FIREBASE_SECRET_KEY }}
+        run: firebase auth:import-service-account-key ${{ secrets.CREDENTIAL_FILE_CONTENT }}
+
       # Upload the IPA to Firebase App Distribution
       - name: Upload to Firebase Distribution
         uses: wzieba/Firebase-Distribution-Github-Action@v1.7.0
