@@ -70,6 +70,43 @@ jobs:
     runs-on: macos-latest
 
     steps:
+      # Checkout the repository
       - uses: actions/checkout@v4
 
-    # Build the iOS app (add your iOS build steps here)
+        # Installs flutter and related dependency on this machine
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel:
+            "stable"
+            # flutter-version: '3.16.8'
+            # ^ If you want to use a specific version of flutter
+
+      # Install CocoaPods
+      - name: Install CocoaPods
+        run: pod install --project-directory=ios
+
+      # Fetch project dependencies
+      - name: Install dependencies
+        run: flutter pub get
+
+      # Verify Dart code formatting
+      - name: Verify formatting
+        run: dart format --output=none --set-exit-if-changed .
+
+      # Analyze the project for semantic errors
+      - name: Analyze project source
+        run: flutter analyze
+
+      # Build the iOS app without code signing
+      - name: Build iOS app
+        run: flutter build ios --no-codesign
+
+      # Upload the IPA to Firebase App Distribution
+      - name: Upload to Firebase Distribution
+        uses: wzieba/Firebase-Distribution-Github-Action@v1.7.0
+        with:
+          appId: 1:303097136559:android:29ab855b0d40d55668db5a
+          serviceCredentialsFileContent: ${{ secrets.CREDENTIAL_FILE_CONTENT }}
+          groups: all_testers
+          file: build/ios/ipa/Runner.ipa
