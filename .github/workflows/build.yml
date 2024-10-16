@@ -107,12 +107,23 @@ jobs:
         run: |
           curl -sL https://firebase.tools | bash
 
-      # Upload the IPA to Firebase App Distribution
-      - name: Upload to Firebase Distribution
-        uses: wzieba/Firebase-Distribution-Github-Action@v1.7.0
-        with:
-          appId: 1:303097136559:android:29ab855b0d40d55668db5a
-          serviceCredentialsFileContent: ${{ secrets.CREDENTIAL_FILE_CONTENT }}
-          groups: all_testers
-          file: build/ios/ipa/Runner.ipa
-          token: ${{ secrets.FIREBASE_SECRET_KEY }}
+        # Upload the IPA to Firebase App Distribution
+      - name: Upload to Firebase App Distribution
+        env:
+          FIREBASE_TOKEN: ${{ secrets.FIREBASE_SECRET_KEY }}
+        run: |
+          firebase appdistribution:distribute \
+          build/ios/ipa/Runner.ipa \
+          --app 1:303097136559:android:29ab855b0d40d55668db5a \
+          --groups "all_testers" \
+          --token "${{ secrets.CREDENTIAL_FILE_CONTENT }}"
+
+      # # Upload the IPA to Firebase App Distribution
+      # - name: Upload to Firebase Distribution
+      #   uses: wzieba/Firebase-Distribution-Github-Action@v1.7.0
+      #   with:
+      #     appId: 1:303097136559:android:29ab855b0d40d55668db5a
+      #     serviceCredentialsFileContent: ${{ secrets.CREDENTIAL_FILE_CONTENT }}
+      #     groups: all_testers
+      #     file: build/ios/ipa/Runner.ipa
+      #     token: ${{ secrets.FIREBASE_SECRET_KEY }}
