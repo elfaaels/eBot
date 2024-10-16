@@ -99,24 +99,37 @@ jobs:
         run: flutter analyze
 
       # Build the iOS app without code signing
+      # - name: Build iOS app
+      #   run: flutter build ios --no-codesign
       - name: Build iOS app
-        run: flutter build ios --no-codesign
+        run: |
+          flutter build ipa --no-codesign
 
       # Install Firebase CLI
       - name: Install Firebase CLI
         run: |
           curl -sL https://firebase.tools | bash
 
-        # Upload the IPA to Firebase App Distribution
+      # Upload the IPA to Firebase App Distribution
       - name: Upload to Firebase App Distribution
         env:
-          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+          GOOGLE_APPLICATION_CREDENTIALS: ${{ secrets.CREDENTIAL_FILE_CONTENT }}
         run: |
           firebase appdistribution:distribute \
           build/ios/ipa/Runner.ipa \
-          --app 1:303097136559:ios:bf607eaa771de30168db5a \
-          --groups "all_testers" \
-          --token "${{ secrets.FIREBASE_TOKEN }}"
+          --app 1:303097136559:ios:bf607eaa771de30168db5a  \
+          --groups "all_testers"
+
+      #   # Upload the IPA to Firebase App Distribution
+      # - name: Upload to Firebase App Distribution
+      #   env:
+      #     FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+      #   run: |
+      #     firebase appdistribution:distribute \
+      #     build/ios/ipa/Runner.ipa \
+      #     --app 1:303097136559:ios:bf607eaa771de30168db5a \
+      #     --groups "all_testers" \
+      #     --token "${{ secrets.FIREBASE_TOKEN }}"
 
       # # Upload the IPA to Firebase App Distribution
       # - name: Upload to Firebase Distribution
