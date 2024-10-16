@@ -105,22 +105,22 @@ jobs:
         run: |
           flutter build ipa --no-codesign
 
-      # Install Firebase CLI
-      - name: Install Firebase CLI
-        run: |
-          curl -sL https://firebase.tools | bash
+      # # Install Firebase CLI
+      # - name: Install Firebase CLI
+      #   run: |
+      #     curl -sL https://firebase.tools | bash
 
-      - name: Set up GOOGLE_APPLICATION_CREDENTIALS
-        run: echo "${{ secrets.CREDENTIAL_FILE_CONTENT }}" > $HOME/service-account.json
+      # - name: Set up GOOGLE_APPLICATION_CREDENTIALS
+      #   run: echo "${{ secrets.CREDENTIAL_FILE_CONTENT }}" > $HOME/service-account.json
 
-      - name: Upload to Firebase App Distribution
-        env:
-          GOOGLE_APPLICATION_CREDENTIALS: $HOME/service-account.json
-        run: |
-          firebase appdistribution:distribute \
-          build/ios/ipa/Runner.ipa \
-          --app 1:303097136559:ios:bf607eaa771de30168db5a \
-          --groups "all_testers"
+      # - name: Upload to Firebase App Distribution
+      #   env:
+      #     GOOGLE_APPLICATION_CREDENTIALS: $HOME/service-account.json
+      #   run: |
+      #     firebase appdistribution:distribute \
+      #     build/ios/ipa/Runner.ipa \
+      #     --app 1:303097136559:ios:bf607eaa771de30168db5a \
+      #     --groups "all_testers"
 
       # # Upload the IPA to Firebase App Distribution
       # - name: Upload to Firebase App Distribution
