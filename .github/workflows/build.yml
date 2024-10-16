@@ -110,13 +110,13 @@ jobs:
         # Upload the IPA to Firebase App Distribution
       - name: Upload to Firebase App Distribution
         env:
-          FIREBASE_TOKEN: ${{ secrets.FIREBASE_SECRET_KEY }}
+          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
         run: |
           firebase appdistribution:distribute \
           build/ios/ipa/Runner.ipa \
-          --app 1:303097136559:android:29ab855b0d40d55668db5a \
+          --app 1:303097136559:ios:bf607eaa771de30168db5a \
           --groups "all_testers" \
-          --token "${{ secrets.CREDENTIAL_FILE_CONTENT }}"
+          --token "${{ secrets.FIREBASE_TOKEN }}"
 
       # # Upload the IPA to Firebase App Distribution
       # - name: Upload to Firebase Distribution
