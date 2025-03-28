@@ -26,7 +26,7 @@ jobs:
 
       # Installs flutter and related dependency on this machine
       - name: Setup Flutter
-        uses: subosito/flutter-action@v2
+        uses: subosito/flutter-action@e938fdf56512cc96ef2f93601a5a40bde3801046 # v2
         with:
           channel: "stable"
           # flutter-version: '3.16.8'
@@ -59,7 +59,7 @@ jobs:
 
         # Upload apk to Firebase distribution
       - name: Upload apk to Firebase distribution
-        uses: wzieba/Firebase-Distribution-Github-Action@v1.7.0
+        uses: wzieba/Firebase-Distribution-Github-Action@a41b2f7ab3f7c2631b6a73fb2f660b517cef45a9 # v1.7.0
         with:
           appId: 1:303097136559:android:29ab855b0d40d55668db5a
           serviceCredentialsFileContent: ${{ secrets.CREDENTIAL_FILE_CONTENT }}
